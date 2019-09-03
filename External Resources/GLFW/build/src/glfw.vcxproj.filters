@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\vulkan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_thread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\wgl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\egl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\osmesa_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\mappings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\build\src\glfw_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\win32_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\wgl_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\egl_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\osmesa_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Programmation Avancee\Fac\L2 - Programmation Avancee\External Resources\GLFW\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{8F9515CD-284F-397C-B751-1AA0A8775061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ED0C57AB-059C-312E-88C0-617CD7FD97C7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
