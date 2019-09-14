@@ -3,7 +3,7 @@ CFLAGS = -W -Wall
 LDFLAGS =
 EXEC = rpg-app
 SRC = main.cpp
-DEPS = Player.cpp
+DEPS = Player.cpp Environnement.cpp System.cpp
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 OBJ = $(SRC: .cpp=.o)
 

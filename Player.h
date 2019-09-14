@@ -26,7 +26,7 @@ private:
   bool sprint;
 
   // Vitesse du joueur
-  float speed = 0.1f;
+  float speed = 1.0f;
   float speedSprint = 0.2f;
 
   // Rendu 2d du personnage
@@ -34,7 +34,7 @@ private:
   sf::Sprite sprite;
 
   // Animation du personnage
-  int frameDuration;
+  int frameDuration = 100;
 
   // Orientation du personnage
   bool lookRight;
@@ -77,10 +77,11 @@ public:
   void setLookLeft(bool LOOK);
   void setLookTop(bool LOOK);
   void setLookBot(bool LOOK);
-  void setTexture(const std::string FILENAME); // Permet un rendu 2d du personnage ( texture + sprite )
-  void setAnimation(int ROW);
+  void setTexture(const std::string FILENAME,int* COUNTERWALKING); // Permet un rendu 2d du personnage ( texture + sprite )
+  void setAnimation(int ROW,int COUNTERWALKING);
   void setFrameDuration(int FRAMEDURATION);
-  void movement();
+  void movement(int* COUNTERWALKING);
+
 
 };
 #endif

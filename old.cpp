@@ -22,20 +22,20 @@ int main()
 	sf::Sprite playerSprite;
 
 	// Chargement des textures du personnage
-	playerTexture.loadFromFile("Character/player.png");
+	playerTexture.loadFromFile("Character/alundrawalk.png");
 	playerSprite.setTexture(playerTexture);
-	playerSprite.setScale(0.35f, 0.35f);
-	playerSprite.setTextureRect(sf::IntRect(0, 0, 95, 103));
+	//playerSprite.setScale(1.0, 1.0);
+	playerSprite.setTextureRect(sf::IntRect(0, 0, 24, 42));
 	//playerSprite.setPosition(window.getSize().x/2, window.getSize().y/2); //Place le sprite au milieu de la fenetre
 
 
 	// Vitesse du joueur
-	float playerMovementSpeed = 0.2;
+	float playerMovementSpeed = 0.1;
 
 	// Animation
 
 	int animationCounter = 0;
-	int animationFrameDuration = 15;
+	int animationFrameDuration = 40;
 	int counterWalking = 0;
 	sf::Clock clock;
 
@@ -81,7 +81,7 @@ int main()
 		mainView.setCenter(playerSprite.getPosition());
 
 		// Sprite du personnage au repos
-		playerSprite.setTextureRect(sf::IntRect(counterWalking * 95, 0 * 105, 95, 103));
+		//playerSprite.setTextureRect(sf::IntRect(counterWalking * 95, 0 * 105, 95, 103));
 
 		// Evenement qui se produit quand on ferme la fenetre
 		sf::Event event;
@@ -113,13 +113,13 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
 			playerSprite.move(0, -playerMovementSpeed);
-			playerSprite.setTextureRect(sf::IntRect(counterWalking * 95, 6*105, 95, 103));
+			playerSprite.setTextureRect(sf::IntRect(counterWalking * 24, 1*42, 24, 44));
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
 			playerSprite.move(0, playerMovementSpeed);
-			playerSprite.setTextureRect(sf::IntRect(counterWalking * 95, 4 * 105, 95, 103));
+			playerSprite.setTextureRect(sf::IntRect(counterWalking * 24, 0 * 105, 24, 42));
 
 		}
 
@@ -134,7 +134,7 @@ int main()
 		{
 			animationCounter =0;
 			counterWalking++;
-			if (counterWalking == 10) // Permet de choisir le bon sprite pour que l'animation soit fluide et cohérente
+			if (counterWalking == 6) // Permet de choisir le bon sprite pour que l'animation soit fluide et cohérente
 			{
 				counterWalking = 0;
 			}
