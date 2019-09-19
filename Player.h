@@ -26,7 +26,7 @@ private:
   bool sprint;
 
   // Vitesse du joueur
-  float speed = 1.0f;
+  float speed = 3.f;
   float speedSprint = 0.2f;
 
   // Rendu 2d du personnage

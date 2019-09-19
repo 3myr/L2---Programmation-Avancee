@@ -87,3 +87,8 @@ void Environnement::setTexture(const std::string FILENAME, sf::RenderWindow* WIN
     }
   }
 }
+
+void Environnement::collision(Player PLAYER)
+{
+
+}
