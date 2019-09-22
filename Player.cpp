@@ -1,9 +1,43 @@
-#include "Player.h"
+#include "header/Player.h"
 
 // Methode constructive
 Player::Player()
 {
+  x = this->getX();
+  y = this->getY();
+  speed = 3.0;
+  speedSprint = 6.0;
+  frameDuration = 100;
+
+  // Alloue et initilialise un tableau 1D de 2 cases contenant les coordonnées X et Y des points
+  coinEnBasAGauche = (float*)malloc(2.0 * sizeof(float));
+  coinEnHautADroite = (float*)malloc(2.0 * sizeof(float));
+  coinEnBasADroite = (float*)malloc(2.0 * sizeof(float));
+  coinEnHautAGauche = (float*)malloc(2.0 * sizeof(float));
+  coinCentre = (float*)malloc(2.0 * sizeof(float));
+
+  coinEnBasAGauche[0] = this->getX();
+  coinEnHautADroite[0] =this->getX()+26;
+  coinEnBasADroite[0] =this->getX()+26;
+  coinEnHautAGauche[0] =this->getX();
+  coinCentre[0] = this->getX()+13;
+
+  coinEnBasAGauche[1] =this->getY()+44;
+  coinEnHautADroite[1] =this->getY();
+  coinEnBasADroite[1] =this->getY();
+  coinEnHautAGauche[1] =this->getY()+44;
+  coinCentre[1] = this->getY()+22;
+
+  collisionTop = false;
+  collisionBot = false;
+  collisionLeft = false;
+  collisionRight = false;
+
+  sprite.setPosition(200,100);
+
 }
+
+// Fonctions d'observations
 
 // Fonctions d'observations
 float Player::getX() const
@@ -55,11 +89,6 @@ sf::Sprite Player::getSprite() const
   return sprite;
 }
 
-int Player::getFrameDuration() const
-{
-  return frameDuration;
-}
-
 bool Player::getLookRight() const
 {
   return lookRight;
@@ -78,6 +107,87 @@ bool Player::getLookTop() const
 bool Player::getLookBot() const
 {
   return lookBot;
+}
+
+int Player::getFrameDuration() const
+{
+  return frameDuration;
+}
+
+float Player::getCoinEnBasAGaucheX() const
+{
+  return this->getX();
+}
+
+float Player::getCoinEnBasADroiteX() const
+{
+  return this->getX()+21.5;
+}
+
+float Player::getCoinEnHautAGaucheX() const
+{
+  return this->getX();
+}
+
+float Player::getCoinEnHautADroiteX() const
+{
+  return this->getX()+21.5;
+}
+
+float Player::getCoinEnBasAGaucheY() const
+{
+  return this->getY()+44;
+}
+
+float Player::getCoinEnBasADroiteY() const
+{
+  return this->getY()+44;
+}
+
+float Player::getCoinEnHautAGaucheY() const
+{
+  return this->getY()+23;
+}
+
+float Player::getCoinEnHautADroiteY() const
+{
+  return this->getY()+23;
+}
+
+float Player::getCoinCentreX() const
+{
+  return this->getX()+13;
+}
+
+float Player::getCoinCentreY() const
+{
+  return this->getX()+22;
+}
+
+bool Player::getCollisionTop() const
+{
+  return collisionTop;
+}
+bool Player::getCollisionBot() const
+{
+  return collisionBot;
+}
+bool Player::getCollisionLeft() const
+{
+  return collisionRight;
+}
+bool Player::getCollisionRight() const
+{
+  return collisionLeft;
+}
+
+float Player::getOldX() const
+{
+  return oldX;
+}
+float Player::getOldY() const
+{
+  return oldY;
 }
 
 
@@ -144,16 +254,77 @@ void Player::setLookBot(bool LOOK)
   lookBot = LOOK;
 }
 
-void Player::setTexture(const std::string FILENAME,int* COUNTERWALKING)
+void Player::setTexture(const std::string FILENAME)
 {
   texture.loadFromFile(FILENAME);
   sprite.setTexture(texture);
-  //sprite.setScale(0.3f,0.3f);
-  setAnimation(4, *COUNTERWALKING);
 }
 
-void Player::setAnimation(int ROW,int COUNTERWALKING)
+void Player::movement(int COUNTERWALKING)
 {
+  // Gère la gestion d'une manette ou d'un clavier
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 60.0)
+  {
+    frameDuration = 100;
+    this->setOldX(this->getX());
+    this->setOldY(this->getY());
+    sprite.move(speed,0);
+    lookRight = 1;
+    lookLeft = 0;
+    lookTop = 0;
+    lookBot = 0;
+    this->setAnimationPlayer(3, COUNTERWALKING);
+    return;
+  }
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -60.0)
+  {
+    frameDuration = 100;
+    this->setOldX(this->getX());
+    this->setOldY(this->getY());
+    sprite.move(-speed,0);
+    lookRight = 0;
+    lookLeft = 1;
+    lookTop = 0;
+    lookBot = 0;
+    this->setAnimationPlayer(2, COUNTERWALKING);
+    return;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) < -60.0)
+  {
+    frameDuration = 100;
+    this->setOldX(this->getX());
+    this->setOldY(this->getY());
+    sprite.move(0,-speed);
+    lookRight = 0;
+    lookLeft = 0;
+    lookTop = 1;
+    lookBot = 0;
+    this->setAnimationPlayer(1, COUNTERWALKING);
+    return;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) > 60.0)
+  {
+    frameDuration = 100;
+    this->setOldX(this->getX());
+    this->setOldY(this->getY());
+    sprite.move(0,speed);
+    lookRight = 0;
+    lookLeft = 0;
+    lookTop = 0;
+    lookBot = 1;
+    this->setAnimationPlayer(0, COUNTERWALKING);
+    return;
+  }
+  frameDuration = 300;
+  this->setAnimationPlayer(4, COUNTERWALKING);
+
+}
+
+void Player::setAnimationPlayer(int ROW,int COUNTERWALKING)
+{
+  //REMPLACER LES VALEURS NUMERIQUE
   switch (ROW)
   {
     case 0:
@@ -194,56 +365,36 @@ void Player::setFrameDuration(int FRAMEDURATION)
   frameDuration = FRAMEDURATION;
 }
 
-void Player::movement(int* COUNTERWALKING)
+void Player::setCollisionTop(bool VAL)
 {
-  // Gère la gestion d'une manette ou d'un clavier
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) > 60.0)
-  {
-    frameDuration = 100;
-    sprite.move(speed,0);
-    lookRight = 1;
-    lookLeft = 0;
-    lookTop = 0;
-    lookBot = 0;
-    setAnimation(3, *COUNTERWALKING);
-    return;
-  }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Joystick::getAxisPosition(0, sf::Joystick::X) < -60.0)
-  {
-    frameDuration = 100;
-    sprite.move(-speed,0);
-    lookRight = 0;
-    lookLeft = 1;
-    lookTop = 0;
-    lookBot = 0;
-    setAnimation(2, *COUNTERWALKING);
-    return;
-  }
+  collisionTop = VAL;
+}
 
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) < -60.0)
-  {
-    frameDuration = 100;
-    sprite.move(0,-speed);
-    lookRight = 0;
-    lookLeft = 0;
-    lookTop = 1;
-    lookBot = 0;
-    setAnimation(1, *COUNTERWALKING);
-    return;
-  }
+void Player::setCollisionBot(bool VAL)
+{
+  collisionBot = VAL;
+}
 
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Joystick::getAxisPosition(0, sf::Joystick::Y) > 60.0)
-  {
-    frameDuration = 100;
-    sprite.move(0,speed);
-    lookRight = 0;
-    lookLeft = 0;
-    lookTop = 0;
-    lookBot = 1;
-    setAnimation(0, *COUNTERWALKING);
-    return;
-  }
-  frameDuration = 300;
-  setAnimation(4, *COUNTERWALKING);
+void Player::setCollisionRight(bool VAL)
+{
+  collisionRight = VAL;
+}
 
+void Player::setCollisionLeft(bool VAL)
+{
+  collisionLeft = VAL;
+}
+
+void Player::setOldX(float OLDX)
+{
+  oldX = OLDX;
+}
+void Player::setOldY(float OLDY)
+{
+  oldY = OLDY;
+}
+
+void Player::setCollisionPos(float OLDX, float OLDY)
+{
+  sprite.setPosition(OLDX,OLDY);
 }

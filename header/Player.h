@@ -9,9 +9,18 @@ class Player
 {
 
 private:
+  // Attribut
+
   // Coordonées sur la carte 2D
   float x;
   float y;
+  float oldX;
+  float oldY;
+  float* coinEnBasAGauche;
+  float* coinEnHautADroite;
+  float* coinEnBasADroite;
+  float* coinEnHautAGauche;
+  float* coinCentre;
 
   // Vie du personnage
   int pv;
@@ -26,15 +35,12 @@ private:
   bool sprint;
 
   // Vitesse du joueur
-  float speed = 3.f;
-  float speedSprint = 0.2f;
+  float speed;
+  float speedSprint;
 
   // Rendu 2d du personnage
   sf::Texture texture;
   sf::Sprite sprite;
-
-  // Animation du personnage
-  int frameDuration = 100;
 
   // Orientation du personnage
   bool lookRight;
@@ -42,11 +48,20 @@ private:
   bool lookTop;
   bool lookBot;
 
+  //Animation personnage
+  int frameDuration;
+
+  //Gestion des collisions
+  bool collisionTop;
+  bool collisionBot;
+  bool collisionRight;
+  bool collisionLeft;
+
+
 public:
 
   // Constructeurs
   Player();
-
   // Fonctions d'observations
   float getX() const;
   float getY() const;
@@ -58,11 +73,29 @@ public:
   float getSpeedSprint() const;
   sf::Texture getTexture() const;
   sf::Sprite getSprite() const;
-  int getFrameDuration() const;
   bool getLookRight() const;
   bool getLookLeft() const;
   bool getLookTop() const;
   bool getLookBot() const;
+  int getFrameDuration() const;
+  float getCoinEnBasAGaucheX() const;
+  float getCoinEnBasADroiteX() const;
+  float getCoinEnHautAGaucheX() const;
+  float getCoinEnHautADroiteX() const;
+  float getCoinEnBasAGaucheY() const;
+  float getCoinEnBasADroiteY() const;
+  float getCoinEnHautAGaucheY() const;
+  float getCoinEnHautADroiteY() const;
+  float getCoinCentreX() const;
+  float getCoinCentreY() const;
+  bool getCollisionTop() const;
+  bool getCollisionBot() const;
+  bool getCollisionLeft() const;
+  bool getCollisionRight() const;
+  float getOldX() const;
+  float getOldY() const;
+
+
 
   // Fonctions de transformations
   void setX(float X);
@@ -77,10 +110,20 @@ public:
   void setLookLeft(bool LOOK);
   void setLookTop(bool LOOK);
   void setLookBot(bool LOOK);
-  void setTexture(const std::string FILENAME,int* COUNTERWALKING); // Permet un rendu 2d du personnage ( texture + sprite )
-  void setAnimation(int ROW,int COUNTERWALKING);
+  void setTexture(const std::string FILENAME); // Permet un rendu 2d du personnage ( texture + sprite )
+  void movement(int COUNTERWALKING);
+  void setAnimationPlayer(int ROW,int COUNTERWALKING);
   void setFrameDuration(int FRAMEDURATION);
-  void movement(int* COUNTERWALKING);
+  void setCollisionTop(bool VAL);
+  void setCollisionBot(bool VAL);
+  void setCollisionRight(bool VAL);
+  void setCollisionLeft(bool VAL);
+  void setOldX(float OLDX);
+  void setOldY(float OLDY);
+  void setCollisionPos(float OLDX,float OLDY);
+
+
+
 
 
 };
