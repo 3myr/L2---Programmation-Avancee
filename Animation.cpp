@@ -3,15 +3,10 @@
 // Methode constructive
 Animation::Animation()
 {
-  frameDuration = 100;
   counterWalking = 0;
 }
 
 // Fonctions d'observations
-int Animation::getFrameDuration() const
-{
-  return frameDuration;
-}
 
 int Animation::getCounterWalking() const
 {
@@ -20,10 +15,6 @@ int Animation::getCounterWalking() const
 
 
 // Fonctions de transformations
-void Animation::setFrameDuration(int FRAMEDURATION)
-{
-  frameDuration = FRAMEDURATION;
-}
 
 void Animation::setCounterWalking(int COUNTERWALKING)
 {

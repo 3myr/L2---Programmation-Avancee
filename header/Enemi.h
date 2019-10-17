@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ENEMI_H
+#define ENEMI_H
 
 #include <fstream>
 #include <string>
@@ -10,24 +10,23 @@
 
 using namespace std;
 
-class Player : public Vaisseau
+class Enemi : public Vaisseau
 {
-
   protected:
 
   public:
 
   // Constructeurs
-  Player();
-  Player(float x, float y, sf::Texture texture, int pv, int atqSpeed, float speed);
-  Player(const std::string FILENAME,int NbLigneInTxt);
-
+  Enemi();
+  Enemi(float x, float y, sf::Texture texture, int pv, int atqSpeed, float speed);
+  Enemi(const std::string FILENAME,int NbLigneInTxt);
 
   // Fonctions d'observations
   void affiche();
 
   // Fonctions de transformations
   void deplacement();
-}
-;
+  void attaque();
+
+};
 #endif

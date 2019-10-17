@@ -1,13 +1,12 @@
-#ifndef MOVING_H
-#define MOVING_H
+#ifndef ATTAQUE_H
+#define ATTAQUE_H
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "Player.h"
-#include "Animation.h"
+
 using namespace std;
 
-class Moving
+class Attaque
 {
 
 private:
@@ -16,11 +15,7 @@ private:
 public:
 
   // Constructeurs
-  Moving();
   // Fonctions d'observations
-
   // Fonctions de transformations
-  void getCounterWalking(int* ANIMATIONCOUNTER,Player PLAYER,Animation* ANIMATION);
-
 };
 #endif

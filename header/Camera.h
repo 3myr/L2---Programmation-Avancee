@@ -13,8 +13,8 @@ private:
   // Attribut
   sf::View mainView;
 
-  int viewWidth; //310
-  int viewHeight; //240
+  int viewWidth;
+  int viewHeight;
 
 public:
 
@@ -29,7 +29,7 @@ public:
   void setView(sf::View VIEW);
   void setViewWidth(int VIEWWIDTH);
   void setViewHeight(int VIEWHEIGHT);
-  void setViewCenterPlayer(Player PLAYER);
+  void movingView();
 
 };
 #endif

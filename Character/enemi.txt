@@ -1,0 +1,6 @@
+x = 380;
+y = 80;
+pv = 10;
+atqSpeed = 100;
+speed = 1;
+texture = "Character/Enemi.png";

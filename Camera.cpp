@@ -3,9 +3,10 @@
 // Methode constructive
 Camera::Camera()
 {
-  viewWidth = 310;
-  viewHeight = 240;
+  viewWidth = 238;
+  viewHeight = 160;
   mainView.setSize(viewWidth,viewHeight);
+  mainView.setCenter(viewWidth/2,viewHeight/2);
 }
 
 // Fonctions d'observations
@@ -40,59 +41,10 @@ void Camera::setViewHeight(int VIEWHEIGHT)
   viewHeight = VIEWHEIGHT;
 }
 
-void Camera::setViewCenterPlayer(Player PLAYER)
+void Camera::movingView()
 {
+  mainView.move(0.3,0);
+  //cout<<"x: " << mainView.getCenter().x<<endl;
 
-  // REMPLACER LES VALEURS NUMERIQUE PAR DES VARIABLES
-  if(PLAYER.getX()<155 && PLAYER.getY()<120)
-  {
-    mainView.setCenter(155,120);
-    return;
-  }
 
-  if(PLAYER.getX()<155 && PLAYER.getY()>840)
-  {
-    mainView.setCenter(155,840);
-  }
-
-  if(PLAYER.getY()<120 && PLAYER.getX()>1093)
-  {
-    mainView.setCenter(1093,120);
-    return;
-  }
-
-  if(PLAYER.getX()>1093 && PLAYER.getY()>840)
-  {
-    mainView.setCenter(1093,840);
-    return;
-  }
-
-  if(PLAYER.getX()>155 && PLAYER.getY()<120)
-  {
-    mainView.setCenter(PLAYER.getX(),120);
-    return;
-  }
-
-  if(PLAYER.getX()<155 && PLAYER.getY()<840)
-  {
-    mainView.setCenter(155,PLAYER.getY());
-    return;
-  }
-
-  if(PLAYER.getX()>155 && PLAYER.getY()>840)
-  {
-    mainView.setCenter(PLAYER.getX(),840);
-    return;
-  }
-
-  if(PLAYER.getX()>1093 && PLAYER.getY()>120)
-  {
-    mainView.setCenter(1093,PLAYER.getY());
-    return;
-  }
-
-  if(PLAYER.getX()>155 && PLAYER.getY()>120 && PLAYER.getX()<1093 && PLAYER.getY()<840)
-  {
-    mainView.setCenter(PLAYER.getSprite().getPosition());
-  }
 }

@@ -1,33 +1,33 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef LEVEL_H
+#define LEVEL_H
 
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "Vaisseau.h"
+#include "Background.h"
 
 using namespace std;
 
-class Player : public Vaisseau
+class Level : public Background
 {
 
   protected:
+    string nom;
 
   public:
 
   // Constructeurs
-  Player();
-  Player(float x, float y, sf::Texture texture, int pv, int atqSpeed, float speed);
-  Player(const std::string FILENAME,int NbLigneInTxt);
+  Level();
+  Level(const std::string FILENAME,const std::string FILENAMEVIEW,int NbLigneInTxt,int NbLigneInTxtView);
 
 
   // Fonctions d'observations
   void affiche();
 
   // Fonctions de transformations
-  void deplacement();
+
 }
 ;
 #endif
