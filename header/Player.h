@@ -12,7 +12,6 @@ using namespace std;
 
 class Player : public Vaisseau
 {
-
   protected:
 
   public:
@@ -22,12 +21,11 @@ class Player : public Vaisseau
   Player(float x, float y, sf::Texture texture, int pv, int atqSpeed, float speed);
   Player(const std::string FILENAME,int NbLigneInTxt);
 
-
   // Fonctions d'observations
   void affiche();
 
   // Fonctions de transformations
-  void deplacement();
+  void deplacement(Background b);
 }
 ;
 #endif

@@ -7,7 +7,9 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include "Projectile.h"
+#include "Background.h"
+#include "Atq1.h"
+#include "Atq2.h"
 
 using namespace std;
 
@@ -30,6 +32,8 @@ protected:
 
   float shootTime;
 
+  Attaque* atq; // Allocation memoire; quand change attaque desalloué memoire puis refaire allocations
+
 
 public:
 
@@ -37,23 +41,27 @@ public:
   Vaisseau();
   Vaisseau(float x, float y, sf::Texture texture, int pv, int atqSpeed, float speed );
   Vaisseau(const std::string FILENAME,int NbLigneInTxt);
+
   // Fonctions d'observations
   void affiche();
   sf::Sprite getSprite();
   sf::Texture getTexture();
   float getShootTime();
   int getAtqSpeed();
-
-
+  sf::Sprite getSpritePro(int i);
+  int getSizeProj();
+  Projectile getProjectile(int i);
 
 
   // Fonctions de transformations
   void setTexture();
   void setShootTime(float VAL);
-  void collision(Vaisseau v2);
+  int collision(Vaisseau v2);
   void collision(Projectile p);
   void loadVar(const std::string FILENAME,int NbLigneInTxt);
-  void attaque();
+  void attaque(Background b);
+  void stayInScreen(Background b);
+
 
 };
 #endif

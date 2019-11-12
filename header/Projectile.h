@@ -41,6 +41,5 @@ class Projectile
   void setPosition(float x,float y);
 
 
-
 };
 #endif

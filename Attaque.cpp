@@ -1,62 +1,66 @@
 #include "header/Attaque.h"
 
 // Methode constructive
+
 Attaque::Attaque()
 {
-  projectile = Projectile("Projectile/Projectile.png"); // Proj
+
 }
+
 
 //Fonctions d'observations
-
-
-float Attaque::getTimeCastProj()
-{
-  return timeCastProj;
-}
-
-Projectile Attaque::getProjectile()
-{
-  return projectile;
-}
-
-vector<Projectile> Attaque::getProjectiles()
-{
-  return projectiles;
-}
-
-sf::Sprite Attaque::getSpriteProjectiles(int i)
+sf::Sprite Attaque::getSpritePro(int i)
 {
   return projectiles[i].getSprite();
 }
 
+int Attaque::getSizeProj()
+{
+  return projectiles.size();
+}
+
+Projectile Attaque::getProjectile(int i)
+{
+  return projectiles[i];
+}
 
 
 //Fonctions de transmorfations
-void Attaque::setProjectile()
+void Attaque::setTextureProj(const std::string FILENAME)
 {
-  //Emplacement du projectile
-  projectile = Projectile("Projectile/Projectile.png");
-  projectiles.push_back(Projectile(projectile));
-  cout<<"size : "<<projectiles.size()<<endl;
+  projectile.setTexture(FILENAME);
 }
 
-void Attaque::setTimeCastProj(float VAL)
-{
-  timeCastProj = VAL;
-}
-
-void Attaque::moveProjectile(int i)
-{
-  projectiles[i].move(0.1,0);
-}
-
-void Attaque::setPositionProjectile(float x, float y)
+void Attaque::setPosition(float x, float y)
 {
   projectile.setPosition(x,y);
 }
 
-void Attaque::push_backProjectile(Projectile projectile)
+void Attaque::push_back()
 {
   projectiles.push_back(Projectile(projectile));
+}
 
+void Attaque::moveP(float b)
+{
+  for(int i=0;i<projectiles.size();i++) // Proj
+  {
+    projectiles[i].move(30,0);
+    if(projectiles[i].getPosition() > b)
+    {
+      projectiles.erase(projectiles.begin()+i);
+    }
+  }
+}
+
+void Attaque::moveE(float b)
+{
+  for(int i=0;i<projectiles.size();i++) // Proj
+  {
+    projectiles[i].move(-5,0);
+    if(projectiles[i].getPosition() > b)
+    {
+      projectiles.erase(projectiles.begin()+i);
+    }
+  }
 }

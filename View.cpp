@@ -46,7 +46,6 @@ float View::getSpeed()
 
 
 
-
 // Fonctions de transformations
 void View::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {

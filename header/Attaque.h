@@ -24,20 +24,20 @@ class Attaque
   Attaque();
 
   // Fonctions d'observations
-  Projectile getProjectile();
-  vector<Projectile> getProjectiles();
-  float getTimeCastProj();
-  sf::Sprite getSpriteProjectiles(int i);
+  sf::Sprite getSpritePro(int i);
+  int getSizeProj();
+  Projectile getProjectile(int i);
 
 
 
 
   // Fonctions de transformations
-  void setProjectile();
-  void setTimeCastProj(float VAL);
-  void moveProjectile(int i);
-  void setPositionProjectile(float x, float y);
-  void push_backProjectile(Projectile projectile);
+  void setTextureProj(const std::string FILENAME);
+  void setPosition(float x, float y);
+  void push_back();
+  void moveP(float b);
+  void moveE(float b);
+
 
 
 };

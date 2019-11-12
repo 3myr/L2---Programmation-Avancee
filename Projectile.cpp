@@ -13,22 +13,6 @@ Projectile::Projectile(const std::string FILENAME) : speed(0.001)
   x = sprite.getPosition().x;
   y = sprite.getPosition().y;
 }
-  /*
-Projectile::Projectile(const std::string FILENAME, int NBDEGATS, float X, float Y) : nbDegats(NBDEGATS), x(X), y(Y), speed(1)
-{
-  //texture.loadFromFile(FILENAME);
-  //sprite.setTexture(texture);
-}
-
-Projectile::Projectile(const std::string FILENAME, int NBDEGATS) : nbDegats(NBDEGATS), speed(1)
-{
-  //texture.loadFromFile(FILENAME);
-  //sprite.setTexture(texture);
-  x = sprite.getPosition().x;
-  y = sprite.getPosition().y;
-}
-*/
-
 
 // Fonctions d'observations
 void Projectile::affiche()
@@ -56,7 +40,6 @@ sf::Texture Projectile::getTexture()
 {
   return texture;
 }
-
 
 
 

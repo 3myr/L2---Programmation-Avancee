@@ -16,7 +16,6 @@ Vaisseau::Vaisseau(const std::string FILENAME,int NbLigneInTxt) : shootTime(0)
   this->loadVar(FILENAME,NbLigneInTxt);
   texture.loadFromFile(filename);
   sprite.setScale(0.25,0.25);
-  //projectile = Projectile("Projectile/Projectile.png");
 }
 
 // Fonctions d'observations
@@ -49,10 +48,24 @@ float Vaisseau::getShootTime()
   return shootTime;
 }
 
-
 int Vaisseau::getAtqSpeed()
 {
   return atqSpeed;
+}
+
+sf::Sprite Vaisseau::getSpritePro(int i)
+{
+  return atq->getSpritePro(i);
+}
+
+int Vaisseau::getSizeProj()
+{
+  return atq->getSizeProj();
+}
+
+Projectile Vaisseau::getProjectile(int i)
+{
+  return atq->getProjectile(i);
 }
 
 
@@ -61,21 +74,26 @@ void Vaisseau::setTexture()
 {
   sprite.setTexture(texture);
   sprite.setPosition(x,y);
+  //atq = (Atq*)malloc(sizeof(Atq*));
+  atq = (Atq1*)new Atq1[1];
+  atq->setTextureProj("Projectile/Projectile.png"); // A changer si texture de projectile différentes
 }
 
-void Vaisseau::collision(Vaisseau v2)
+int Vaisseau::collision(Vaisseau v2)
 {
   if(    this->getSprite().getPosition().x < v2.getSprite().getPosition().x + v2.getTexture().getSize().x * v2.getSprite().getScale().x
       && this->getSprite().getPosition().x + this->getTexture().getSize().x * this->getSprite().getScale().x > v2.getSprite().getPosition().x
       && this->getSprite().getPosition().y < v2.getSprite().getPosition().y + v2.getTexture().getSize().y * v2.getSprite().getScale().y
       && this->getSprite().getPosition().y + this->getTexture().getSize().y * this->getSprite().getScale().y > v2.getSprite().getPosition().y)
   {
-    cout<<"COLLISION Vaisseau"<<endl;
+    return 1;
   }
+  return 0;
 }
 
-void Vaisseau::collision(Projectile p) // A modifier
+void Vaisseau::collision(Projectile p)
 {
+
   if(    this->getSprite().getPosition().x < p.getSprite().getPosition().x + p.getTexture().getSize().x * p.getSprite().getScale().x
       && this->getSprite().getPosition().x + this->getTexture().getSize().x * this->getSprite().getScale().x > p.getSprite().getPosition().x
       && this->getSprite().getPosition().y < p.getSprite().getPosition().y + p.getTexture().getSize().y * p.getSprite().getScale().y
@@ -136,16 +154,22 @@ void Vaisseau::setShootTime(float VAL)
   }
 }
 
-void Vaisseau::attaque()
+void Vaisseau::attaque(Background b)
 {
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && this->getShootTime() >= atqSpeed)
+  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0) )&& this->getShootTime() >= this->getAtqSpeed())
     {
-      /*
       // On lance une attaque ( qui lance des projectiles )
-      projectile.setPosition(this->getSprite().getPosition().x+this->getTexture().getSize().x * this->getSprite().getScale().x,this->getSprite().getPosition().y+15*this->getSprite().getScale().y);
-      projectiles.push_back(Projectile(projectile));
+      atq->setPosition(this->getSprite().getPosition().x+this->getTexture().getSize().x * this->getSprite().getScale().x,this->getSprite().getPosition().y+15*this->getSprite().getScale().y);
+      atq->push_back();
       this->setShootTime(-1);
-      */
     }
+  atq->moveP(b.getView().getCenter().x+b.getWitdhView());
+}
 
+void Vaisseau::stayInScreen(Background b)
+{
+  if(this->sprite.getPosition().x < b.getView().getCenter().x-b.getWitdhView()/2)
+  {
+    sprite.move(b.getMainView().getSpeed(),0);
+  }
 }

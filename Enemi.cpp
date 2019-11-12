@@ -16,6 +16,7 @@ Enemi::Enemi(const std::string FILENAME,int NbLigneInTxt) : Vaisseau(FILENAME,Nb
 
 }
 
+//Fonctions d'observations
 void Enemi::affiche()
 {
   cout<<"\nVaisseau enemi: "<<endl;
@@ -23,17 +24,28 @@ void Enemi::affiche()
 
 }
 
+//Fonctions de transformations
+void Enemi::setTexture()
+{
+  sprite.setTexture(texture);
+  sprite.setPosition(x,y);
+  atq = (Atq2*)new Atq2[1];
+  atq->setTextureProj("Projectile/Projectile2.png"); // A changer si texture de projectile différentes
+}
+
 void Enemi::deplacement()
 {
   sprite.move(-speed,0);
 }
 
-void Enemi::attaque()
+void Enemi::attaque(Background b)
 {
-  if (this->getShootTime() >= atqSpeed)
+  if ( this->getShootTime() >= this->getAtqSpeed())
     {
-      // On lance une attaque ( qui lance des projectiles )
-
+      atq->setPosition(this->getSprite().getPosition().x+this->getTexture().getSize().x * this->getSprite().getScale().x,this->getSprite().getPosition().y+15*this->getSprite().getScale().y);
+      atq->push_back();
       this->setShootTime(-1);
     }
+    atq->moveE(b.getView().getCenter().x+b.getWitdhView());
+
 }

@@ -1,72 +1,42 @@
-#include "header/Background.h"
+#include "header/Couche.h"
 
 // Methode constructive
-Background::Background() : movingTime(0)
+Couche::Couche()
 {
 
 }
 
-Background::Background(const std::string FILENAMEVIEW,int NbLigneInTxtView) : movingTime(0)
+Couche::Couche(const std::string FILENAME,int NbLigneInTxt)
 {
-  this->setView(View(FILENAMEVIEW,NbLigneInTxtView));
+  this->loadVar(FILENAME,NbLigneInTxt);
+  texture.loadFromFile(filename);
+  this->openMap(FILENAME,NbLigneInTxt);
 }
 
 
 // Fonctions d'observations
-void Background::affiche()
-{
-  cout<<"largeur background: "<<this->getWitdh()<<endl;
-  cout<<"hauteur background: "<<this->getHeight()<<endl;
-  mainView.affiche();
 
-}
-
-float Background::getWitdh()
+float Couche::getWitdh()
 {
  return texture.getSize().x;
 }
 
-float Background::getHeight()
+float Couche::getHeight()
 {
   return texture.getSize().y;
 }
 
-sf::Texture Background::getTexture()
+sf::Texture Couche::getTexture()
 {
   return texture;
 }
 
-sf::Sprite Background::getSprite()
+sf::Sprite Couche::getSprite()
 {
   return sprite;
 }
 
-sf::View Background::getView()
-{
-  return mainView.getView();
-}
-
-float Background::getMovingTime()
-{
-  return movingTime;
-}
-
-float Background::getWitdhView()
-{
-  return mainView.getWidth();
-}
-
-float Background::getHeightView()
-{
-  return mainView.getHeight();
-}
-
-View Background::getMainView()
-{
-  return mainView;
-}
-
-void Background::openMap(const std::string FILENAME,int NbLigneInTxt)
+void Couche::openMap(const std::string FILENAME,int NbLigneInTxt)
 {
 
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
@@ -132,7 +102,7 @@ void Background::openMap(const std::string FILENAME,int NbLigneInTxt)
 }
 
 // Fonctions de transformations
-void Background::loadVar(const std::string FILENAME,int NbLigneInTxt)
+void Couche::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
   string* line;
@@ -159,45 +129,19 @@ void Background::loadVar(const std::string FILENAME,int NbLigneInTxt)
   //free(line); // Probleme de liberation de memoire
 }
 
-void Background::setTexture()
+void Couche::setTexture()
 {
   sprite.setTexture(texture);
   //sprite.setPosition(x,y);
 }
 
-void Background::setView(View VIEW)
-{
-  mainView = VIEW;
-}
-
-void Background::movingView()
-{
-  if(movingTime>1)
-  {
-    movingTime = 0;
-    mainView.movingView();
-  }
-}
-
-void Background::setMovingTime(float VAL)
-{
-  if(VAL==-1)
-  {
-    movingTime = 0;
-  }
-  else
-  {
-    movingTime = movingTime + VAL;
-  }
-}
-
-void Background::setTextureTileSet()
+void Couche::setTextureTileSet()
 {
   tileSetTexture.loadFromFile(tileSetTextureName);
   tileSetSprite.setTexture(tileSetTexture);
 }
 
-void Background::drawMap(sf::RenderWindow* WINDOW)
+void Couche::drawMap(sf::RenderWindow* WINDOW)
 {
   int tilecount =-1;
 

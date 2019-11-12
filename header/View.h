@@ -37,7 +37,6 @@ class View
   float getCenter() const;
   float getSpeed();
 
-
   // Fonctions de transformations
   void loadVar(const std::string FILENAME,int NbLigneInTxt);
   void setWidth(int VIEWWIDTH);
