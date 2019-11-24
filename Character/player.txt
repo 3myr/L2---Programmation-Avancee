@@ -1,6 +1,6 @@
 x = 20;
 y = 30;
 pv = 50;
-atqSpeed = 100;
+atqSpeed = 300; //Attention, une attque speed moins élevé entrainera des baisses de fps
 speed = 1;
-texture = "Character/Player.png";
+texture = "Character/player.png";

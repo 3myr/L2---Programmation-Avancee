@@ -24,18 +24,6 @@ class Background
     View mainView;
     float movingTime;
 
-    // la map
-    sf::Texture tileSetTexture;
-    sf::Sprite tileSetSprite;
-    string tileSetTextureName;
-    int height;
-    int width;
-    int spriteLarg;
-    int spriteLong;
-    int tileSetWidth;
-    int tileSetHeight;
-    int* map;
-
   public:
 
   // Constructeurs
@@ -44,27 +32,20 @@ class Background
 
 
   // Fonctions d'observations
-  void affiche();
   float getWitdh();
   float getHeight();
-  sf::Texture getTexture();
-  sf::Sprite getSprite();
   sf::View getView();
   float getWitdhView();
   float getHeightView();
   float getMovingTime();
   View getMainView();
-  void openMap(const std::string FILENAME, int NbLigneInTxt);
 
 
   // Fonctions de transformations
   void loadVar(const std::string FILENAME,int NbLigneInTxt);
-  void setTexture();
   void setView(View VIEW);
   void movingView();
   void setMovingTime(float VAL);
-  void drawMap(sf::RenderWindow* WINDOW);
-  void setTextureTileSet();
 
 
 }

@@ -23,9 +23,13 @@ class Player : public Vaisseau
 
   // Fonctions d'observations
   void affiche();
+  Attaque* getAttque(int i);
 
   // Fonctions de transformations
   void deplacement(Background b);
+  void attaque(Background b);
+  void collisionProjectile(Vaisseau e);
+
 }
 ;
 #endif

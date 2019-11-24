@@ -7,7 +7,6 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Background.h"
-#include "Player.h"
 
 
 using namespace std;
@@ -35,7 +34,7 @@ class Interface
 
   // Constructeurs
   Interface();
-  Interface(float width, float height, sf::Texture texture);
+  Interface(float width, float height);
 
 
   // Fonctions d'observations
@@ -43,10 +42,14 @@ class Interface
   sf::Texture getTexture();
   sf::Text getText(int i);
   float getTime();
+  int size();
+
+
 
   // Fonctions de transformations
   void setTexture();
   void setTime(float VAL);
+  void setPosition(Background b);
 
 }
 ;

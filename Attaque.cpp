@@ -2,9 +2,9 @@
 
 // Methode constructive
 
-Attaque::Attaque()
+Attaque::Attaque(const std::string FILENAME)
 {
-
+  projectile.setTexture(FILENAME);
 }
 
 
@@ -22,6 +22,16 @@ int Attaque::getSizeProj()
 Projectile Attaque::getProjectile(int i)
 {
   return projectiles[i];
+}
+
+vector<Projectile> Attaque::getProjectiles()
+{
+  return projectiles;
+}
+
+string Attaque::getName()
+{
+  return name;
 }
 
 
@@ -43,24 +53,20 @@ void Attaque::push_back()
 
 void Attaque::moveP(float b)
 {
-  for(int i=0;i<projectiles.size();i++) // Proj
-  {
-    projectiles[i].move(30,0);
-    if(projectiles[i].getPosition() > b)
-    {
-      projectiles.erase(projectiles.begin()+i);
-    }
-  }
+
 }
 
 void Attaque::moveE(float b)
 {
-  for(int i=0;i<projectiles.size();i++) // Proj
-  {
-    projectiles[i].move(-5,0);
-    if(projectiles[i].getPosition() > b)
-    {
-      projectiles.erase(projectiles.begin()+i);
-    }
-  }
+
+}
+
+void Attaque::addProj(float posX, float poxY, float scaleX, float scaleY, float widthSprite)
+{
+
+}
+
+void Attaque::erase(int i)
+{
+  projectiles.erase(projectiles.begin()+i);
 }

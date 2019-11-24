@@ -1,5 +1,4 @@
 #include "header/PauseMenu.h"
-#define SFML_DEPRECATED
 
 // Methode constructive
 
@@ -27,28 +26,28 @@ PauseMenu::PauseMenu(float width, float height)
   text.setPosition(width, height);
   //text.setPosition(150, 100);
   text.setScale(0.2,0.2);
-  text.setColor(sf::Color::Red);
+  text. setFillColor(sf::Color::Red);
   texts.push_back(sf::Text(text));
 
   text.setString("Options");
   text.setPosition(width, (height));
   //text.setPosition(150, 140);
   text.setScale(0.2,0.2);
-  text.setColor(sf::Color::White);
+  text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 
   text.setString("Menu principale");
   text.setPosition(width, (height));
   //text.setPosition(150, 180);
   text.setScale(0.2,0.2);
-  text.setColor(sf::Color::White);
+  text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 
   text.setString("Quitter");
   text.setPosition(width, (height));
   //text.setPosition(150, 180);
   text.setScale(0.2,0.2);
-  text.setColor(sf::Color::White);
+  text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 }
 
@@ -75,6 +74,7 @@ int PauseMenu::getEnter()
     }
     return selectedItemIndex;
   }
+  return -1;
 }
 
 sf::Sprite PauseMenu::getSprite()
@@ -108,7 +108,7 @@ void PauseMenu::choix()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && Time >= 240)
     {
       Time = 0;
-      texts[selectedItemIndex].setColor(sf::Color::White);
+      texts[selectedItemIndex].setFillColor(sf::Color::White);
       if(selectedItemIndex == 3)
       {
         selectedItemIndex = 0;
@@ -117,13 +117,13 @@ void PauseMenu::choix()
       {
         selectedItemIndex = selectedItemIndex + 1;
       }
-      texts[selectedItemIndex].setColor(sf::Color::Red);
+      texts[selectedItemIndex]. setFillColor(sf::Color::Red);
     }
     //Deplacement en Haut
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && Time >= 240)
     {
       Time = 0;
-      texts[selectedItemIndex].setColor(sf::Color::White);
+      texts[selectedItemIndex].setFillColor(sf::Color::White);
       if(selectedItemIndex == 0)
       {
         selectedItemIndex = 3;
@@ -132,7 +132,7 @@ void PauseMenu::choix()
       {
         selectedItemIndex = selectedItemIndex - 1;
       }
-      texts[selectedItemIndex].setColor(sf::Color::Red);
+      texts[selectedItemIndex].setFillColor(sf::Color::Red);
     }
   }
 }

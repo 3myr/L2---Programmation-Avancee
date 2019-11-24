@@ -1,5 +1,4 @@
 #include "header/MainMenu.h"
-#define SFML_NO_DEPRECATED_WARNINGS
 
 // Methode constructive
 
@@ -52,28 +51,28 @@ MainMenu::MainMenu(float width, float height)
   //text.setPosition(width, height);
   text.setPosition(150, 60);
   text.setScale(1,1);
-  text.setColor(sf::Color::Red);
+  text. setFillColor(sf::Color::Red);
   texts.push_back(sf::Text(text));
 
   text.setString("Nouvelle partie");
   //text.setPosition(width, (height));
   text.setPosition(150, 100);
   text.setScale(1,1);
-  text.setColor(sf::Color::White);
+  text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 
   text.setString("Options");
   //text.setPosition(width, (height));
   text.setPosition(150, 140);
   text.setScale(1,1);
-  text.setColor(sf::Color::White);
+  text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 
   text.setString("Quitter");
   //text.setPosition(width, (height));
   text.setPosition(150, 180);
   text.setScale(1,1);
-  text.setColor(sf::Color::White);
+  text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 }
 
@@ -86,16 +85,21 @@ int MainMenu::getEnter()
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && Time >= 240 && menuIsOn == 1)
   {
     Time = 0;
+    // Cas dans lequel on continue la partie
     if(selectedItemIndex==0)
     {
+      // Ferme le menu
       menuIsOn = 0;
     }
+    // Cas dans lequel on lance une nouvelle partie
     if(selectedItemIndex==1)
     {
+      // Ferme le menu
       menuIsOn = 0;
     }
     return selectedItemIndex;
   }
+  return -1;
 }
 
 sf::Sprite MainMenu::getSprite()
@@ -116,7 +120,7 @@ void MainMenu::choix()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && Time >= 240)
     {
       Time = 0;
-      texts[selectedItemIndex].setColor(sf::Color::White);
+      texts[selectedItemIndex]. setFillColor(sf::Color::White);
       if(selectedItemIndex == 3)
       {
         selectedItemIndex = 0;
@@ -125,14 +129,14 @@ void MainMenu::choix()
       {
         selectedItemIndex = selectedItemIndex + 1;
       }
-      texts[selectedItemIndex].setColor(sf::Color::Red);
+      texts[selectedItemIndex]. setFillColor(sf::Color::Red);
 
     }
     //Deplacement en Haut
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && Time >= 240)
     {
       Time = 0;
-      texts[selectedItemIndex].setColor(sf::Color::White);
+      texts[selectedItemIndex]. setFillColor(sf::Color::White);
       if(selectedItemIndex == 0)
       {
         selectedItemIndex = 3;
@@ -141,7 +145,7 @@ void MainMenu::choix()
       {
         selectedItemIndex = selectedItemIndex - 1;
       }
-      texts[selectedItemIndex].setColor(sf::Color::Red);
+      texts[selectedItemIndex]. setFillColor(sf::Color::Red);
     }
   }
 }

@@ -1,5 +1,4 @@
 #include "header/Menu.h"
-#define SFML_DEPRECATED
 
 // Methode constructive
 

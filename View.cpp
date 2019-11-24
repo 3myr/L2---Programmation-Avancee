@@ -90,7 +90,7 @@ void View::setHeight(int VIEWHEIGHT)
   height = VIEWHEIGHT;
 }
 
-void View::movingView()
+void View::movingView() // CHANGER LE 1785 PAR LA VALEUR CORRECT
 {
   if(mainView.getCenter().x < 1785 && mainView.getCenter().y >=80)
   {

@@ -9,7 +9,7 @@ Interface::Interface()
   }
 }
 
-Interface::Interface(float width, float height, sf::Texture texture) : texture(texture)
+Interface::Interface(float width, float height)
 {
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
   {
@@ -22,7 +22,7 @@ Interface::Interface(float width, float height, sf::Texture texture) : texture(t
   text.setPosition(width, height);
 
   text.setScale(0.2,0.2);
-  text.setColor(sf::Color::Red);
+  text. setFillColor(sf::Color::Red);
   texts.push_back(sf::Text(text));
 }
 
@@ -48,6 +48,11 @@ sf::Texture Interface::getTexture()
   return texture;
 }
 
+int Interface::size()
+{
+  return texts.size();
+}
+
 
 // Fonctions constructive
 
@@ -66,4 +71,9 @@ void Interface::setTime(float VAL)
 void Interface::setTexture()
 {
   sprite.setTexture(texture);
+}
+
+void Interface::setPosition(Background b)
+{
+
 }

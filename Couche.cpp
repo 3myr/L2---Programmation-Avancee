@@ -9,7 +9,6 @@ Couche::Couche()
 Couche::Couche(const std::string FILENAME,int NbLigneInTxt)
 {
   this->loadVar(FILENAME,NbLigneInTxt);
-  texture.loadFromFile(filename);
   this->openMap(FILENAME,NbLigneInTxt);
 }
 

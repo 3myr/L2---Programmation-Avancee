@@ -53,19 +53,30 @@ int Vaisseau::getAtqSpeed()
   return atqSpeed;
 }
 
-sf::Sprite Vaisseau::getSpritePro(int i)
+sf::Sprite Vaisseau::getSpritePro(int i) // CHANGER TOUT CA
 {
-  return atq->getSpritePro(i);
+  return atqs[i]->getSpritePro(i);
 }
 
-int Vaisseau::getSizeProj()
+int Vaisseau::getSizeProj(int i)
 {
-  return atq->getSizeProj();
+  return atqs[i]->getSizeProj();
 }
 
 Projectile Vaisseau::getProjectile(int i)
 {
-  return atq->getProjectile(i);
+  return atqs[i]->getProjectile(i);
+}
+
+vector<Projectile> Vaisseau::getProjectiles(int i)
+{
+  return atqs[i]->getProjectiles();
+}
+
+
+int Vaisseau::getSizeAtqs()
+{
+  return atqs.size();
 }
 
 
@@ -74,9 +85,6 @@ void Vaisseau::setTexture()
 {
   sprite.setTexture(texture);
   sprite.setPosition(x,y);
-  //atq = (Atq*)malloc(sizeof(Atq*));
-  atq = (Atq1*)new Atq1[1];
-  atq->setTextureProj("Projectile/Projectile.png"); // A changer si texture de projectile différentes
 }
 
 int Vaisseau::collision(Vaisseau v2)
@@ -91,7 +99,7 @@ int Vaisseau::collision(Vaisseau v2)
   return 0;
 }
 
-void Vaisseau::collision(Projectile p)
+int Vaisseau::collision(Projectile p)
 {
 
   if(    this->getSprite().getPosition().x < p.getSprite().getPosition().x + p.getTexture().getSize().x * p.getSprite().getScale().x
@@ -100,7 +108,9 @@ void Vaisseau::collision(Projectile p)
       && this->getSprite().getPosition().y + this->getTexture().getSize().y * this->getSprite().getScale().y > p.getSprite().getPosition().y)
   {
     cout<<"COLLISION Projectile"<<endl;
+    return 1;
   }
+  return 0;
 }
 
 void Vaisseau::loadVar(const std::string FILENAME,int NbLigneInTxt)
@@ -156,14 +166,12 @@ void Vaisseau::setShootTime(float VAL)
 
 void Vaisseau::attaque(Background b)
 {
-  if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0) )&& this->getShootTime() >= this->getAtqSpeed())
-    {
-      // On lance une attaque ( qui lance des projectiles )
-      atq->setPosition(this->getSprite().getPosition().x+this->getTexture().getSize().x * this->getSprite().getScale().x,this->getSprite().getPosition().y+15*this->getSprite().getScale().y);
-      atq->push_back();
-      this->setShootTime(-1);
-    }
-  atq->moveP(b.getView().getCenter().x+b.getWitdhView());
+
+}
+
+void Vaisseau::deplacement(Background b)
+{
+
 }
 
 void Vaisseau::stayInScreen(Background b)
@@ -171,5 +179,13 @@ void Vaisseau::stayInScreen(Background b)
   if(this->sprite.getPosition().x < b.getView().getCenter().x-b.getWitdhView()/2)
   {
     sprite.move(b.getMainView().getSpeed(),0);
+  }
+}
+
+void Vaisseau::drawAttaque(sf::RenderWindow* window,int i)
+{
+  for(int j=0;j<atqs[i]->getSizeProj();j++)
+  {
+     window->draw(atqs[i]->getSpritePro(j));
   }
 }

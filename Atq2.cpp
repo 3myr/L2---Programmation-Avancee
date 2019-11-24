@@ -2,9 +2,10 @@
 
 // Methode constructive
 
-Atq2::Atq2() : Attaque()
+Atq2::Atq2(const std::string FILENAME) : Attaque(FILENAME)
 {
-
+  name = "AT2";
+  nbProjectiles = 3;
 }
 
 
@@ -13,10 +14,24 @@ Atq2::Atq2() : Attaque()
 //Fonctions de transmorfations
 void Atq2::moveP(float b)
 {
+  //cout<<this->getName()<<endl;
 
   for(int i=0;i<projectiles.size();i++) // Proj
   {
-    projectiles[i].move(100,0);
+    if(i==0)
+    {
+      projectiles[i].move(5,-1);
+    }
+    else
+    {
+      if(i==1)
+      {
+        projectiles[i].move(5,0);
+      }
+      else{
+        projectiles[i].move(5,1);
+      }
+    }
     if(projectiles[i].getPosition() > b)
     {
       projectiles.erase(projectiles.begin()+i);
@@ -28,17 +43,17 @@ void Atq2::moveE(float b)
 {
   for(int i=0;i<projectiles.size();i++) // Proj
   {
-    projectiles[i].move(-50,0);
-    if(projectiles[i].getPosition() > b)
+    projectiles[i].move(-5,0);
+    if(projectiles[i].getPosition() < b)
     {
       projectiles.erase(projectiles.begin()+i);
     }
   }
 }
 
-void Atq2::initAtq(float posX, float poxY, float scaleX, float scaleY, float widthSprite)
+void Atq2::addProj(float posX, float poxY, float scaleX, float scaleY, float widthSprite)
 {
-  for(int i=0;i<this->getSizeProj();i++)
+  for(int i=0;i<nbProjectiles;i++)
   {
     projectile.setPosition(posX+widthSprite*scaleX,poxY+(12+i*15)*scaleY);
     projectiles.push_back(Projectile(projectile));

@@ -17,16 +17,14 @@ class Atq2 : public Attaque
   public:
 
   // Constructeurs
-  Atq2();
+  Atq2(const std::string FILENAME);
 
   // Fonctions d'observations
 
   // Fonctions de transformations
   void moveP(float b);
   void moveE(float b);
-  virtual void initAtq(float posX, float poxY, float scaleX, float scaleY, float widthSprite);
-
-
+  void addProj(float posX, float poxY, float scaleX, float scaleY, float widthSprite);
 
 };
 #endif
