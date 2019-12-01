@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
 #include <string>
+#include <SFML/Audio.hpp>
 
 
 using namespace std;
@@ -22,6 +23,10 @@ class Attaque
 
     //Verifier ou l'on rentre
     string name;
+
+    // Son du projectile
+    sf::SoundBuffer buffer;
+    sf::Sound sound;
 
   public:
 

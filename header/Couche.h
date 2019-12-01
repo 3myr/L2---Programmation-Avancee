@@ -2,8 +2,10 @@
 #define COUCHE_H
 
 #include <fstream>
+#include <string.h>
 #include <string>
 #include <iostream>
+#include <stdio.h>
 #include <vector>
 #include <SFML/Graphics.hpp>
 

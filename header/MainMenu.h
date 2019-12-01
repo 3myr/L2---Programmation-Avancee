@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Menu.h"
+#include "../Liste/linkedListe.h"
 
 
 using namespace std;
@@ -15,6 +16,9 @@ class MainMenu : public Menu
   protected:
     sf::Texture texture;
     sf::Sprite sprite;
+
+    sf::Texture textureUI;
+    sf::Sprite spriteUI;
 
   public:
 

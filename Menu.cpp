@@ -29,6 +29,13 @@ float Menu::getTime()
   return Time;
 }
 
+int Menu::isPlaying()
+{
+  return playing;
+}
+
+
+
 
 //Fonctions de transmorfations
 
@@ -56,4 +63,29 @@ void Menu::setPosition(float x, float y)
 void Menu::setMenuEtat(int val)
 {
   menuIsOn = val;
+}
+
+void Menu::setPlaying()
+{
+  playing = 1;
+}
+
+void Menu::playSound()
+{
+  sound.play();
+  playing = 1;
+}
+
+void Menu::pauseSound()
+{
+  sound.pause();
+  playing = 0;
+}
+
+void Menu::drawUi(sf::RenderWindow* window)
+{
+  for(int i=0;i<titreSprite.size();i++)
+  {
+    window->draw(titreSprite[i]);
+  }
 }

@@ -53,18 +53,20 @@ public:
   Projectile getProjectile(int i);
   vector<Projectile> getProjectiles(int i);
   int getSizeAtqs();
+  int getPv();
 
 
   // Fonctions de transformations
   void setTexture();
   void setShootTime(float VAL);
-  int collision(Vaisseau v2);
+  int collision(Vaisseau* v2);
   int collision(Projectile p);
   void loadVar(const std::string FILENAME,int NbLigneInTxt);
   virtual void attaque(Background b);
   virtual void deplacement(Background b);
   void stayInScreen(Background b);
   void drawAttaque(sf::RenderWindow* window,int i);
+  Vaisseau copyVaisseau(Vaisseau* e);
 
 
 };

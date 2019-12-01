@@ -14,8 +14,8 @@
 #include "MainMenu.h"
 #include "PauseMenu.h"
 #include "Couche.h"
-#include "LinkedList.h"
 #include "Interface.h"
+#include "../Liste/linkedListe.h"
 
 using namespace std;
 using namespace sf;
@@ -32,12 +32,12 @@ class Game
     sf::Text text;
 
     Player p;
-    Enemi e;
+    vector<Enemi*> enemis;
     Background b;
     Couche c1,c2,c3,c4,c5,c6;
     MainMenu* mm;
     PauseMenu* pm;
-    Interface ui;
+    Interface* ui;
 
   public:
 
@@ -54,6 +54,8 @@ class Game
   void quit();
   int checkMainMenu();
   int checkPauseMenu();
+  void save();
+
 
 
 

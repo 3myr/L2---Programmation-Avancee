@@ -17,6 +17,7 @@ PauseMenu::PauseMenu(float width, float height)
     cout<<"Impossible de charger la police d'écriture"<<endl;
   }
 
+
   menuIsOn = 0;
   selectedItemIndex = 0;
 

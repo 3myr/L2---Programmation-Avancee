@@ -6,7 +6,7 @@ Game::Game(RenderWindow* window)
 }
 
 /**
-* Initialise les variables
+* Initialise les variables du jeu
 *
 */
 void Game::initVariables()
@@ -14,8 +14,9 @@ void Game::initVariables()
   //Initialisation des personnages et du Décor
   this->p = Player("Character/player.txt",6); // Nombre de ligne
   this->p.setTexture(); // Chercher a enlever
-  this->e = Enemi("Character/enemi.txt",6);
-  this->e.setTexture(); // Chercher a enlever
+  Enemi* e = new Enemi("Character/enemi.txt",6);
+  e->setTexture(); // Chercher a enlever
+  enemis.push_back((e));
   this->b = Background("Background/view.txt",3);
 
   // A METTRE DANS LA CLASSE BACKGROUND ------------
@@ -36,21 +37,32 @@ void Game::initVariables()
   this->mm = new MainMenu(this->b.getWitdhView(),this->b.getHeightView());
   this->mm->setTexture();
   this->pm = new PauseMenu(this->b.getWitdhView(),this->b.getHeightView());
-  this->ui = Interface(this->b.getWitdhView(),this->b.getHeightView());
+  this->ui = new Interface(this->b.getWitdhView(),this->b.getHeightView());
 
 }
 
+/**
+* Permet de mettre une clock pour les différentes classes
+*
+*/
 void Game::setTime()
 {
   //Recupération du temps pour les différents événements
   this->b.setMovingTime(this->clock.getElapsedTime().asMilliseconds());
   this->p.setShootTime(this->clock.getElapsedTime().asMilliseconds());
-  this->e.setShootTime(this->clock.getElapsedTime().asMilliseconds());
+  for(int i=0;i<enemis.size();i++)
+  {
+    this->enemis[i]->setShootTime(this->clock.getElapsedTime().asMilliseconds());
+  }
   this->pm->setTime(this->clock.getElapsedTime().asMilliseconds());
   this->mm->setTime(this->clock.getElapsedTime().asMilliseconds());
   this->clock.restart();
 }
 
+/**
+* Fonctions affichant tout les éléments du jeu
+*
+*/
 void Game::draw()
 {
   // A METTRE DANS LA CLASSE BACKGROUND ------------
@@ -66,27 +78,32 @@ void Game::draw()
   {
     p.drawAttaque(window,i);
   }
-  for(int i=0;i<e.getSizeAtqs();i++)
+  for(int j=0;j<enemis.size();j++)
   {
-    e.drawAttaque(window,i);
+    for(int i=0;i<enemis[j]->getSizeAtqs();i++)
+    {
+      enemis[j]->drawAttaque(window,i);
+    }
   }
 
   window->draw(p.getSprite());
-  window->draw(e.getSprite());
-
-  // A mettre dans une classe-------------------------------------
-   window->draw(text);
-  //----------------------------------------------------------------
-
-  // Probleme de segmentation ????
-  /*
-  for(int i=0;i<ui.size();i++)
+  for(int j=0;j<enemis.size();j++)
   {
-    window->draw(ui.getText(i));
+    window->draw(enemis[j]->getSprite());
   }
-  */
+
+   ui->drawFPS(window);
+
+  for(int i=0;i<ui->size();i++)
+  {
+    window->draw(ui->getText(i));
+  }
 }
 
+/**
+* Gestion du Menu Principal
+*
+*/
 int Game::checkMainMenu()
 {
   mm->choix();
@@ -104,6 +121,7 @@ int Game::checkMainMenu()
     // Affichage des éléments composant le menu
     window->clear();
     window->draw(mm->getSprite());
+    mm->drawUi(window);
     for(int i=0;i<4;i++)
     {
       window->draw(mm->getText(i));
@@ -115,11 +133,19 @@ int Game::checkMainMenu()
   return 0; // Le menu n'est pas active
 }
 
-int Game::checkPauseMenu() // Probleme de view qui ne se deplace pas
+/**
+* Gestion du Menu Pause
+*
+*/
+int Game::checkPauseMenu()
 {
   pm->choix();
   if(pm->getMenuEtat()==1)
   {
+    if(pm->getEnter()==1)
+    {
+      this->save();
+    }
     if(pm->getEnter()==2)
     {
       mm->setTime(-1);
@@ -130,10 +156,10 @@ int Game::checkPauseMenu() // Probleme de view qui ne se deplace pas
       //Charge les données du jeux par défault
 
       //Liberer la mémoire
-
       exit(EXIT_SUCCESS);
     }
 
+    mm->pauseSound();
     window->clear();
     for(int i=0;i<4;i++)
     {
@@ -142,9 +168,17 @@ int Game::checkPauseMenu() // Probleme de view qui ne se deplace pas
     window->display();
     return 1; // Le menu est active
   }
+  if(mm->isPlaying()!=1)
+  {
+    mm->playSound();
+  }
   return 0; // Le menu n'est pas active
 }
 
+/**
+* Permet de jouer au jeu
+*
+*/
 void Game::start()
 {
   window->setVerticalSyncEnabled(false);
@@ -154,20 +188,11 @@ void Game::start()
   this->initVariables();
 
 
-  if(!this->font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
-  {
-    cout<<"Impossible de charger la police d'écriture"<<endl;
-  }
-   text.setFont(font);
-
   while ( window->isOpen())
   {
 
-    // A mettre dans une classe-------------------------------------
-    sf::Time frameTime =  clock.getElapsedTime();
-     text.setString("Fps: " + to_string(int(1/frameTime.asSeconds())));
-     text.setScale(0.20,0.20);
-    //----------------------------------------------------------------
+    ui->setFrameTime(&clock);
+    ui->setFPS();
 
     sf::Event event;
     while ( window->pollEvent(event))
@@ -182,6 +207,11 @@ void Game::start()
 
     if(this->checkMainMenu()==1)
     {
+      if(mm->isPlaying()!=1)
+      {
+        mm->playSound();
+        mm->setPlaying();
+      }
       window->setView(window->getDefaultView());
     }
     else
@@ -199,19 +229,33 @@ void Game::start()
 
         //Evenements
          p.deplacement(b);
-         e.deplacement(b); // Supprimer e quand COLLISION ( sinon baisse constante de fps )
+         for(int i=0;i<enemis.size();i++)
+         {
+           enemis[i]->deplacement(b); // Supprimer e quand COLLISION ( sinon baisse constante de fps )
+         }
+
          p.stayInScreen(b);
-         p.collision(e);
+
+         for(int i=0;i<enemis.size();i++)
+         {
+           p.collision(enemis[i]);
+         }
 
          p.attaque(b);
-         e.attaque(b,p);
-         p.collisionProjectile(e); // Cette fonction produit une baisse extreme de FPS quand il y a beaucoup de projectiles
+
+         for(int i=0;i<enemis.size();i++)
+         {
+           enemis[i]->attaque(b,p);
+           if(p.collisionProjectile(enemis[i])==1)
+           {
+             enemis.erase(enemis.begin()+i);
+           } // Cette fonction produit une baisse extreme de FPS quand il y a beaucoup de projectiles
+         }
+
 
          pm->setPosition(b.getView().getCenter().x-20,60);
-
-         // A mettre dans une classe-------------------------------------
-         text.setPosition(b.getView().getCenter().x-162,0);
-        //----------------------------------------------------------------
+         ui->setPosition(b.getView().getCenter().x+85,0);
+         ui->setPositionFPS(b.getView().getCenter().x-162,0);
 
          this->draw();
          }
@@ -221,4 +265,16 @@ void Game::start()
       window->display();
     }
   }
+}
+
+void Game::save()
+{
+  ofstream file;
+  file.open("Character/playerTestSave.txt");
+  file << "x = "<< 20 <<";\n";
+  file << "y = "<< 30 <<";\n";
+  file << "pv = "<< p.getPv() << ";\n";
+  file << "atqSpeed = "<< p.getAtqSpeed() << ";\n";
+
+  file.close();
 }

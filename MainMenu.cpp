@@ -7,6 +7,7 @@ MainMenu::MainMenu()
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
   {
     cout<<"Impossible de charger la police d'écriture"<<endl;
+    exit(EXIT_FAILURE);
   }
 
   menuIsOn = 1;
@@ -41,39 +42,78 @@ MainMenu::MainMenu(float width, float height)
   {
     cout<<"Impossible de charger la police d'écriture"<<endl;
   }
+  if (!buffer.loadFromFile("Sounds/rasputin.wav"))
+  {
+    cout<<"Le sond n'a pas pu être chargé !"<<endl;
+    exit(EXIT_FAILURE);
+  }
+  sound.setBuffer(buffer);
+  playing = 0;
 
   menuIsOn = 1;
   selectedItemIndex = 0;
+
+  // UI pour le titre
+  titleTexture.loadFromFile("Menu/Title.png");
+  titleSprite.setTexture(titleTexture);
+  titleSprite.setPosition(110,20);
+  titreSprite.push_back(sf::Sprite(titleSprite));
+
 
   sf::Text text;
   text.setFont(font);
   text.setString("Continue");
   //text.setPosition(width, height);
-  text.setPosition(150, 60);
+  text.setPosition(555, 390);
   text.setScale(1,1);
   text. setFillColor(sf::Color::Red);
   texts.push_back(sf::Text(text));
 
+  // UI pour le premier menu
+  textureUI.loadFromFile("Menu/UI_block3.png");
+  spriteUI.setTexture(textureUI);
+  spriteUI.setPosition(540,380);
+  titreSprite.push_back(sf::Sprite(spriteUI));
+
   text.setString("Nouvelle partie");
   //text.setPosition(width, (height));
-  text.setPosition(150, 100);
+  text.setPosition(555, 470);
   text.setScale(1,1);
   text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
+
+  // UI pour le premier menu
+  spriteUI.setPosition(540,460);
+  titreSprite.push_back(sf::Sprite(spriteUI));
+
 
   text.setString("Options");
   //text.setPosition(width, (height));
-  text.setPosition(150, 140);
+  text.setPosition(555, 555);
   text.setScale(1,1);
   text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 
+  // UI pour le premier menu
+  textureUI.loadFromFile("Menu/UI_bloc3k.png");
+  spriteUI.setTexture(textureUI);
+  spriteUI.setPosition(540,540);
+  titreSprite.push_back(sf::Sprite(spriteUI));
+
+
   text.setString("Quitter");
   //text.setPosition(width, (height));
-  text.setPosition(150, 180);
+  text.setPosition(555, 630);
   text.setScale(1,1);
   text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
+
+  // UI pour le premier menu
+  textureUI.loadFromFile("Menu/UI_block3.png");
+  spriteUI.setTexture(textureUI);
+  spriteUI.setPosition(540,620);
+  titreSprite.push_back(sf::Sprite(spriteUI));
+
 }
 
 

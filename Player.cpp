@@ -108,24 +108,26 @@ void Player::attaque(Background b)
   }
 }
 
-void Player::collisionProjectile(Vaisseau e)
+int Player::collisionProjectile(Vaisseau* e)
 {
   // Pour optimiser la recherche de collisions, on regarde la distance entre le premier projectile tiré et la distance entre celui-ci et le vaisseau enemi ainsi que la distance entre un vaisseau enemi et le player
   if(atqs.size()>0)
   {
-    if(atqs[0]->getProjectile(0).getPosition() - e.getSprite().getPosition().x < 50 || this->getSprite().getPosition().x - e.getSprite().getPosition().x < 20)
+    if(atqs[0]->getProjectile(0).getPosition() - e->getSprite().getPosition().x < 50 || this->getSprite().getPosition().x - e->getSprite().getPosition().x < 20)
     {
       for(int i=0;i<atqs.size();i++)
       {
         for(int j=0;j<atqs[i]->getSizeProj();j++)
         {
-          if(e.collision(atqs[i]->getProjectile(j))==1)
+          if(e->collision(atqs[i]->getProjectile(j))==1)
           {
             atqs[i]->erase(j);
             //e->erase();
+            return 1; // efface vaisseau
           }
         }
       }
     }
   }
+  return 0;
 }

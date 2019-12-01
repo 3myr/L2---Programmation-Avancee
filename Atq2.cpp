@@ -6,6 +6,12 @@ Atq2::Atq2(const std::string FILENAME) : Attaque(FILENAME)
 {
   name = "AT2";
   nbProjectiles = 3;
+  if(!buffer.loadFromFile("Sounds/tir.wav"))
+  {
+    cout<<"Le sond n'a pas pu être chargé !"<<endl;
+    exit(EXIT_FAILURE);
+  }
+  sound.setBuffer(buffer);
 }
 
 
@@ -57,5 +63,6 @@ void Atq2::addProj(float posX, float poxY, float scaleX, float scaleY, float wid
   {
     projectile.setPosition(posX+widthSprite*scaleX,poxY+(12+i*15)*scaleY);
     projectiles.push_back(Projectile(projectile));
+    sound.play();
   }
 }

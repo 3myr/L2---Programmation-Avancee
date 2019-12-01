@@ -4,6 +4,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Attaque.h"
+#include <SFML/Audio.hpp>
+
 
 
 using namespace std;

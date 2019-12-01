@@ -28,7 +28,7 @@ class Player : public Vaisseau
   // Fonctions de transformations
   void deplacement(Background b);
   void attaque(Background b);
-  void collisionProjectile(Vaisseau e);
+  int collisionProjectile(Vaisseau* e);
 
 }
 ;

@@ -21,10 +21,16 @@ class Interface
 
     // Score du joueur
     int score;
+    sf::Text scoreText;
 
     // Gestion de text
     sf::Font font; // Style de caractère
     vector<sf::Text> texts; // Titre des options cliquable
+
+    //Fps
+    sf::Font fontFPS;
+    sf::Text textFPS;
+    sf::Time frameTime;
 
     // Gestion des animations / raffraichissement
     float Time;
@@ -41,6 +47,7 @@ class Interface
   sf::Sprite getSprite();
   sf::Texture getTexture();
   sf::Text getText(int i);
+  sf::Text getScoreText();
   float getTime();
   int size();
 
@@ -49,7 +56,13 @@ class Interface
   // Fonctions de transformations
   void setTexture();
   void setTime(float VAL);
-  void setPosition(Background b);
+  void setPosition(float x, float y);
+  void setFrameTime(sf::Clock* clock);
+  void setFPS();
+  void setPositionFPS(float x, float y);
+  void drawFPS(sf::RenderWindow* window);
+  void setScore(int i);
+
 
 }
 ;
