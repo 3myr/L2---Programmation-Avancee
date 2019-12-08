@@ -1,6 +1,6 @@
 #include "header/Atq1.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
 
 Atq1::Atq1(const std::string FILENAME) : Attaque(FILENAME)
 {
@@ -14,10 +14,23 @@ Atq1::Atq1(const std::string FILENAME) : Attaque(FILENAME)
   sound.setBuffer(buffer);
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions d'observations
 
-//Fonctions de transmorfations
+
+
+
+//Fonctions d'observations ---------------------------------------------------
+
+// ---------------------------------------------------------------------------
+
+
+
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Atq1::moveP(float b)
 {
   for(int i=0;i<projectiles.size();i++) // Proj // PROBLEME LA SIZE EST DE 0
@@ -51,3 +64,5 @@ void Atq1::addProj(float posX, float poxY, float scaleX, float scaleY, float wid
     sound.play();
   }
 }
+
+// ---------------------------------------------------------------------------

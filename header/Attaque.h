@@ -49,6 +49,7 @@ class Attaque
   virtual void moveE(float b);
   virtual void addProj(float posX, float poxY, float scaleX, float scaleY, float widthSprite);
   void erase(int i);
+  void stopSound();
 
 
 

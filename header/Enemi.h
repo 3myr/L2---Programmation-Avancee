@@ -27,6 +27,7 @@ class Enemi : public Vaisseau
   // Fonctions de transformations
   void deplacement(Background b);
   void attaque(Background b, Vaisseau v);
+  void setPosition(float x, float y);
 
 };
 #endif

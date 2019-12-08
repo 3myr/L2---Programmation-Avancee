@@ -1,0 +1,6 @@
+x = 280;
+y = 80;
+pv = 10;
+atqSpeed = 400;
+speed = 1;
+texture = "Character/Boss1.png";

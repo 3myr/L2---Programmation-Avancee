@@ -1,6 +1,6 @@
 #include "header/Atq2.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
 
 Atq2::Atq2(const std::string FILENAME) : Attaque(FILENAME)
 {
@@ -14,10 +14,23 @@ Atq2::Atq2(const std::string FILENAME) : Attaque(FILENAME)
   sound.setBuffer(buffer);
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions d'observations
 
-//Fonctions de transmorfations
+
+
+
+//Fonctions d'observations ---------------------------------------------------
+
+// ---------------------------------------------------------------------------
+
+
+
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Atq2::moveP(float b)
 {
   //cout<<this->getName()<<endl;
@@ -52,6 +65,7 @@ void Atq2::moveE(float b)
     projectiles[i].move(-5,0);
     if(projectiles[i].getPosition() < b)
     {
+      sound.stop();
       projectiles.erase(projectiles.begin()+i);
     }
   }
@@ -66,3 +80,5 @@ void Atq2::addProj(float posX, float poxY, float scaleX, float scaleY, float wid
     sound.play();
   }
 }
+
+// ---------------------------------------------------------------------------

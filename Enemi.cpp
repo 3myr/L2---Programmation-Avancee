@@ -1,6 +1,7 @@
 #include "header/Enemi.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 Enemi::Enemi() : Vaisseau()
 {
 
@@ -16,7 +17,12 @@ Enemi::Enemi(const std::string FILENAME,int NbLigneInTxt) : Vaisseau(FILENAME,Nb
 
 }
 
-//Fonctions d'observations
+// ---------------------------------------------------------------------------
+
+
+
+//Fonctions d'observations ---------------------------------------------------
+
 void Enemi::affiche()
 {
   cout<<"\nVaisseau enemi: "<<endl;
@@ -24,11 +30,18 @@ void Enemi::affiche()
 
 }
 
+// ---------------------------------------------------------------------------
+
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Enemi::deplacement(Background b)
 {
   if(sprite.getPosition().x<b.getView().getCenter().x-(b.getWitdhView()/1.5))
   {
-    cout<<"L'enemi doit etre supprimé"<<endl;
+    //cout<<"L'enemi doit etre supprimé"<<endl;
   }
   else{
     sprite.move(-speed,0);
@@ -40,22 +53,24 @@ void Enemi::attaque(Background b, Vaisseau v)
 {
   if ( this->getShootTime() >= this->getAtqSpeed())
     {
-      Attaque* atq = new Atq1("Projectile/Projectile.png");
+      if(atqs.size()<3)
+      {
+        Attaque* atq = new Atq3("Projectile/Projectile.png");
 
-      //Defini les différentes variables ( a remplacer par des variables )
-      float posX = this->getSprite().getPosition().x;
-      float posY = this->getSprite().getPosition().y-3;
-      float scaleX = this->getSprite().getScale().x;
-      float scaleY = this->getSprite().getScale().y;
-      float widthSprite = this->getTexture().getSize().x;
+        //Defini les différentes variables ( a remplacer par des variables )
+        float posX = this->getSprite().getPosition().x;
+        float posY = this->getSprite().getPosition().y-3;
+        float scaleX = this->getSprite().getScale().x;
+        float scaleY = this->getSprite().getScale().y;
+        float widthSprite = this->getTexture().getSize().x;
 
+        atq->addProj(posX, posY, scaleX, scaleY, widthSprite);
 
-      atq->addProj(posX, posY, scaleX, scaleY, widthSprite);
-
-      //PROBLEME ICI CAR LES PROJECTILE SE RETROUVENT TOUS AU MEME ENDROIT ( ? )
-      //atq->setPosition(this->getSprite().getPosition().x+this->getTexture().getSize().x * this->getSprite().getScale().x,this->getSprite().getPosition().y+15*this->getSprite().getScale().y);
-      atqs.push_back(atq);
-      this->setShootTime(-1);
+        //PROBLEME ICI CAR LES PROJECTILE SE RETROUVENT TOUS AU MEME ENDROIT ( ? )
+        //atq->setPosition(this->getSprite().getPosition().x+this->getTexture().getSize().x * this->getSprite().getScale().x,this->getSprite().getPosition().y+15*this->getSprite().getScale().y);
+        atqs.push_back(atq);
+        this->setShootTime(-1);
+      }
     }
 
     for(int i=0;i<atqs.size();i++)
@@ -63,6 +78,7 @@ void Enemi::attaque(Background b, Vaisseau v)
       atqs[i]->moveE(b.getView().getCenter().x-b.getWitdhView()); // Formule pas encore au top
       if(atqs[i]->getSizeProj()<1)
       {
+        delete atqs[i];
         atqs.erase(atqs.begin()+i);
       }
     }
@@ -71,3 +87,12 @@ void Enemi::attaque(Background b, Vaisseau v)
 
 
 }
+
+void Enemi::setPosition(float x, float y)
+{
+  this->x = x;
+  this->y = y;
+}
+
+
+// ---------------------------------------------------------------------------

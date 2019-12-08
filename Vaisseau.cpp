@@ -1,6 +1,7 @@
 #include "header/Vaisseau.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 Vaisseau::Vaisseau() : shootTime(0)
 {
 
@@ -18,7 +19,13 @@ Vaisseau::Vaisseau(const std::string FILENAME,int NbLigneInTxt) : shootTime(0)
   sprite.setScale(0.25,0.25);
 }
 
-// Fonctions d'observations
+// ---------------------------------------------------------------------------
+
+
+
+
+
+//Fonctions d'observations ---------------------------------------------------
 
 void Vaisseau::affiche()
 {
@@ -29,8 +36,6 @@ void Vaisseau::affiche()
   cout<<"pv : "<<pv<<endl;
   cout<<"atqSpeed : "<<atqSpeed<<endl;
   cout<<"speed : " <<speed<<endl;
-
-
 }
 
 sf::Sprite Vaisseau::getSprite()
@@ -73,7 +78,6 @@ vector<Projectile> Vaisseau::getProjectiles(int i)
   return atqs[i]->getProjectiles();
 }
 
-
 int Vaisseau::getSizeAtqs()
 {
   return atqs.size();
@@ -84,9 +88,25 @@ int Vaisseau::getPv()
   return pv;
 }
 
+float Vaisseau::getSpeed()
+{
+  return speed;
+}
+
+float Vaisseau::getPosition()
+{
+  return sprite.getPosition().x;
+}
+
+// ---------------------------------------------------------------------------
 
 
-// Fonctions de transformations
+
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Vaisseau::setTexture()
 {
   sprite.setTexture(texture);
@@ -113,7 +133,6 @@ int Vaisseau::collision(Projectile p)
       && this->getSprite().getPosition().y < p.getSprite().getPosition().y + p.getTexture().getSize().y * p.getSprite().getScale().y
       && this->getSprite().getPosition().y + this->getTexture().getSize().y * this->getSprite().getScale().y > p.getSprite().getPosition().y)
   {
-    cout<<"COLLISION Projectile"<<endl;
     return 1;
   }
   return 0;
@@ -194,3 +213,20 @@ void Vaisseau::drawAttaque(sf::RenderWindow* window,int i)
      window->draw(atqs[i]->getSpritePro(j));
   }
 }
+
+void Vaisseau::free()
+{
+  for (auto p : atqs)
+   {
+     delete p;
+   }
+   atqs.clear();
+
+}
+
+void Vaisseau::setScale(float x,float y)
+{
+  sprite.setScale(x,y);
+}
+
+// ---------------------------------------------------------------------------

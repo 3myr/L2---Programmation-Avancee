@@ -1,6 +1,6 @@
 #include "header/Menu.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
 
 Menu::Menu()
 {
@@ -12,8 +12,10 @@ Menu::Menu(float width, float height)
 
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions d'observations
+//Fonctions d'observations ---------------------------------------------------
+
 sf::Text Menu::getText(int i)
 {
   return texts[i];
@@ -34,10 +36,15 @@ int Menu::isPlaying()
   return playing;
 }
 
+int Menu::getSelectedItemIndex()
+{
+  return selectedItemIndex;
+}
+
+// ---------------------------------------------------------------------------
 
 
-
-//Fonctions de transmorfations
+//Fonctions de transmorfations -----------------------------------------------
 
 void Menu::setTime(float VAL)
 {
@@ -76,6 +83,12 @@ void Menu::playSound()
   playing = 1;
 }
 
+void Menu::stopSound()
+{
+  sound.stop();
+  playing = 0;
+}
+
 void Menu::pauseSound()
 {
   sound.pause();
@@ -89,3 +102,5 @@ void Menu::drawUi(sf::RenderWindow* window)
     window->draw(titreSprite[i]);
   }
 }
+
+// ---------------------------------------------------------------------------

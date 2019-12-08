@@ -7,6 +7,7 @@
 #include "View.cpp"
 #include "Atq1.cpp"
 #include "Atq2.cpp"
+#include "Atq3.cpp"
 #include "Menu.cpp"
 #include "MainMenu.cpp"
 #include "PauseMenu.cpp"
@@ -14,13 +15,10 @@
 #include "Game.cpp"
 #include "Interface.cpp"
 #include "Liste/linkedListe.cpp"
-
-
-
+#include "Boss.cpp"
+#include "ChoiceMenu.cpp"
 
 using namespace sf;
-
-//#include "Collide.cpp"
 
 int main(int argc, char* argv[])
 {

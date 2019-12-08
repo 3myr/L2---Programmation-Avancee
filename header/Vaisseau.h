@@ -10,6 +10,7 @@
 #include "Background.h"
 #include "Atq1.h"
 #include "Atq2.h"
+#include "Atq3.h"
 
 using namespace std;
 
@@ -54,10 +55,12 @@ public:
   vector<Projectile> getProjectiles(int i);
   int getSizeAtqs();
   int getPv();
+  float getSpeed();
+  float getPosition();
 
 
   // Fonctions de transformations
-  void setTexture();
+  virtual void setTexture();
   void setShootTime(float VAL);
   int collision(Vaisseau* v2);
   int collision(Projectile p);
@@ -67,6 +70,8 @@ public:
   void stayInScreen(Background b);
   void drawAttaque(sf::RenderWindow* window,int i);
   Vaisseau copyVaisseau(Vaisseau* e);
+  void free();
+  void setScale(float x,float y);
 
 
 };

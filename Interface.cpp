@@ -1,6 +1,7 @@
 #include "header/Interface.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 Interface::Interface()
 {
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
@@ -34,7 +35,13 @@ Interface::Interface(float width, float height)
   score = 0;
 }
 
-// Fonctions d'observations
+// ---------------------------------------------------------------------------
+
+
+
+
+
+//Fonctions d'observations ---------------------------------------------------
 
 sf::Text Interface::getText(int i)
 {
@@ -67,9 +74,13 @@ sf::Text Interface::getScoreText()
   return scoreText;
 }
 
+// ---------------------------------------------------------------------------
 
 
-// Fonctions constructive
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
 
 void Interface::setTime(float VAL)
 {
@@ -123,3 +134,5 @@ void Interface::setScore(int i)
   scoreText.setString(score+"");
   scoreText.setPosition(texts[0].getPosition().x, texts[0].getPosition().y);
 }
+
+// ---------------------------------------------------------------------------

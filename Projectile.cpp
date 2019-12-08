@@ -1,6 +1,7 @@
 #include "header/Projectile.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 Projectile::Projectile()
 {
 
@@ -14,7 +15,15 @@ Projectile::Projectile(const std::string FILENAME) : speed(0.001)
   y = sprite.getPosition().y;
 }
 
-// Fonctions d'observations
+// ---------------------------------------------------------------------------
+
+
+
+
+
+
+//Fonctions d'observations ---------------------------------------------------
+
 void Projectile::affiche()
 {
   cout<<"\nx projectile: "<<x<<endl;
@@ -41,9 +50,14 @@ sf::Texture Projectile::getTexture()
   return texture;
 }
 
+// ---------------------------------------------------------------------------
 
 
-// Fonctions de transformations
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Projectile::move(float x, float y)
 {
   sprite.move(x,y);
@@ -62,3 +76,5 @@ void Projectile::setPosition(float x,float y)
 {
   sprite.setPosition(x,y);
 }
+
+// ---------------------------------------------------------------------------

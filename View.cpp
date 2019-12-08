@@ -1,6 +1,7 @@
 #include "header/View.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 View::View() : width(238), height(160), speed(0.2)
 {
   mainView.setSize(width,height);
@@ -14,8 +15,13 @@ View::View(const std::string FILENAME,int NbLigneInTxt)
   mainView.setCenter(width/2,height/2);
 }
 
+// ---------------------------------------------------------------------------
 
-// Fonctions d'observations
+
+
+
+//Fonctions d'observations ---------------------------------------------------
+
 void View::affiche()
 {
   cout<<"largeur view: "<<width<<endl;
@@ -44,9 +50,15 @@ float View::getSpeed()
   return speed;
 }
 
+// ---------------------------------------------------------------------------
 
 
-// Fonctions de transformations
+
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void View::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
@@ -77,7 +89,7 @@ void View::loadVar(const std::string FILENAME,int NbLigneInTxt)
   {
     cout << "Impossible d'ouvrir le fichier";
   }
-  //free(line); // Probleme de liberation de memoire
+  delete [] line;
 }
 
 void View::setWidth(int VIEWWIDTH)
@@ -97,3 +109,5 @@ void View::movingView() // CHANGER LE 1785 PAR LA VALEUR CORRECT
     mainView.move(speed,0);
   }
 }
+
+// ---------------------------------------------------------------------------

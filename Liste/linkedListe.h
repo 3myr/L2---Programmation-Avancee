@@ -37,7 +37,7 @@ class linkedListe{
     // Fonctions de transformations
     void ajouter( T* v );
     void supprimer( int i );
-    void libererListe( Liste<T> L );
+    void libererListe( Liste<T>* L );
     void free();
 
 };

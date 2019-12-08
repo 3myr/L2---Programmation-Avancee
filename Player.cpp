@@ -1,6 +1,7 @@
 #include "header/Player.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 Player::Player() : Vaisseau()
 {
 
@@ -16,7 +17,13 @@ Player::Player(const std::string FILENAME,int NbLigneInTxt) : Vaisseau(FILENAME,
 
 }
 
-// Fonctions d'observations
+// ---------------------------------------------------------------------------
+
+
+
+
+
+//Fonctions d'observations ---------------------------------------------------
 
 void Player::affiche()
 {
@@ -29,8 +36,12 @@ Attaque* Player::getAttque(int i)
   return atqs[i];
 }
 
+// ---------------------------------------------------------------------------
 
-// Fonctions de transformations
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
 
 void Player::deplacement(Background b)
 {
@@ -83,26 +94,30 @@ void Player::attaque(Background b)
 {
   if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Joystick::isButtonPressed(0, 0) )&& this->getShootTime() >= this->getAtqSpeed())
   {
-    Attaque* atq = new Atq2("Projectile/Projectile2.png");
+    if(atqs.size()<3)
+    {
+      Attaque* atq = new Atq2("Projectile/Projectile2.png");
 
-    //Defini les différentes variables ( a remplacer par des variables )
-    float posX = this->getSprite().getPosition().x;
-    float posY = this->getSprite().getPosition().y;
-    float scaleX = this->getSprite().getScale().x;
-    float scaleY = this->getSprite().getScale().y;
-    float widthSprite = this->getTexture().getSize().x;
+      //Defini les différentes variables ( a remplacer par des variables )
+      float posX = this->getSprite().getPosition().x;
+      float posY = this->getSprite().getPosition().y;
+      float scaleX = this->getSprite().getScale().x;
+      float scaleY = this->getSprite().getScale().y;
+      float widthSprite = this->getTexture().getSize().x;
 
 
-    atq->addProj(posX, posY, scaleX, scaleY, widthSprite);
+      atq->addProj(posX, posY, scaleX, scaleY, widthSprite);
 
-    atqs.push_back(atq);
-    this->setShootTime(-1);
+      atqs.push_back(atq);
+      this->setShootTime(-1);
+    }
   }
   for(int i=0;i<atqs.size();i++)
   {
-    atqs[i]->moveP(b.getView().getCenter().x+b.getWitdhView());
+    atqs[i]->moveP(b.getView().getCenter().x+b.getWitdhView()/2);
     if(atqs[i]->getSizeProj()<1)
     {
+      delete atqs[i];
       atqs.erase(atqs.begin()+i);
     }
   }
@@ -131,3 +146,5 @@ int Player::collisionProjectile(Vaisseau* e)
   }
   return 0;
 }
+
+// ---------------------------------------------------------------------------

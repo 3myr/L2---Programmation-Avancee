@@ -1,6 +1,7 @@
 #include "header/Background.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 Background::Background()
 {
 
@@ -9,10 +10,40 @@ Background::Background()
 Background::Background(const std::string FILENAMEVIEW,int NbLigneInTxtView)
 {
   this->setView(View(FILENAMEVIEW,NbLigneInTxtView));
+
+  // initialisation des couches
+  Couche* c = new Couche("Background/background.txt",7);
+  c->setTextureTileSet();
+  couches.push_back(c);
+
+  c = new Couche("Background/mountains1.txt",7);
+  c->setTextureTileSet();
+  couches.push_back(c);
+
+  c = new Couche("Background/mountains2.txt",7);
+  c->setTextureTileSet();
+  couches.push_back(c);
+
+  c = new Couche("Background/arbre1.txt",7);
+  c->setTextureTileSet();
+  couches.push_back(c);
+
+  c = new Couche("Background/arbre2.txt",7);
+  c->setTextureTileSet();
+  couches.push_back(c);
+
+  c = new Couche("Background/moon.txt",7);
+  c->setTextureTileSet();
+  couches.push_back(c);
+
 }
 
+// ---------------------------------------------------------------------------
 
-// Fonctions d'observations
+
+
+
+//Fonctions d'observations ---------------------------------------------------
 
 sf::View Background::getView()
 {
@@ -39,8 +70,24 @@ View Background::getMainView()
   return mainView;
 }
 
+Couche* Background::getCouche(int i)
+{
+  return couches[i];
+}
 
-// Fonctions de transformations
+vector<Couche*> Background::getCouches()
+{
+  return couches;
+}
+
+// ---------------------------------------------------------------------------
+
+
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Background::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
@@ -65,7 +112,7 @@ void Background::loadVar(const std::string FILENAME,int NbLigneInTxt)
   {
     cout << "Impossible d'ouvrir le fichier";
   }
-  //free(line); // Probleme de liberation de memoire
+  delete [] line;
 }
 
 
@@ -94,3 +141,11 @@ void Background::setMovingTime(float VAL)
     movingTime = movingTime + VAL;
   }
 }
+
+void Background::setCouche(const std::string LEVELNAME)
+{
+
+}
+
+
+// ---------------------------------------------------------------------------

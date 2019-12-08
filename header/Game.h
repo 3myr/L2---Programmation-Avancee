@@ -16,6 +16,8 @@
 #include "Couche.h"
 #include "Interface.h"
 #include "../Liste/linkedListe.h"
+#include "Boss.h"
+#include "ChoiceMenu.h"
 
 using namespace std;
 using namespace sf;
@@ -33,10 +35,12 @@ class Game
 
     Player p;
     vector<Enemi*> enemis;
+    linkedListe<Enemi> enemisPero;
     Background b;
-    Couche c1,c2,c3,c4,c5,c6;
+    Boss* boss;
     MainMenu* mm;
     PauseMenu* pm;
+    ChoiceMenu* cm;
     Interface* ui;
 
   public:
@@ -54,7 +58,11 @@ class Game
   void quit();
   int checkMainMenu();
   int checkPauseMenu();
+  int checkChoiceMenu();
   void save();
+  void placementEnemi();
+  void evenement();
+  void free();
 
 
 

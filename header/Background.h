@@ -7,6 +7,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "View.h"
+#include "Couche.h"
 
 using namespace std;
 
@@ -24,6 +25,9 @@ class Background
     View mainView;
     float movingTime;
 
+    // Couche de la map
+    vector<Couche*> couches;
+
   public:
 
   // Constructeurs
@@ -39,13 +43,15 @@ class Background
   float getHeightView();
   float getMovingTime();
   View getMainView();
-
+  Couche* getCouche(int i);
+  vector<Couche*> getCouches();
 
   // Fonctions de transformations
   void loadVar(const std::string FILENAME,int NbLigneInTxt);
   void setView(View VIEW);
   void movingView();
   void setMovingTime(float VAL);
+  void setCouche(const std::string LEVELNAME);
 
 
 }

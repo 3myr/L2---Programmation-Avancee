@@ -9,7 +9,8 @@ using namespace std;
  * Construction  de la liste vide
 */
 template <class T>
-linkedListe<T>::linkedListe(){
+linkedListe<T>::linkedListe()
+{
 
   list = NULL;
   lvar = NULL;
@@ -21,19 +22,20 @@ linkedListe<T>::linkedListe(){
  *
 */
 template <class T>
-void linkedListe<T>::ajouter( T* v ){
+void linkedListe<T>::ajouter(T* v)
+{
 
   //Creation de la liste à insérer dans la liste principale
   Liste<T>* val = new Liste<T>;
   val->suivant = NULL;
   val->premier = v;
 
-  if ( list != NULL ){
-
+  if ( list != NULL )
+  {
     lvar = list;
 
-    while( lvar->suivant != NULL ){
-
+    while( lvar->suivant != NULL )
+    {
       lvar = lvar->suivant;
     }
 
@@ -54,10 +56,11 @@ void linkedListe<T>::ajouter( T* v ){
  *
 */
 template <class T>
-void linkedListe<T>::supprimer( int i ){
+void linkedListe<T>::supprimer(int i)
+{
 
-  if ( list == NULL ){
-
+  if ( list == NULL )
+  {
     cout << "Impossible de supprimer un élément d'une liste vide !\n";
     exit(EXIT_FAILURE);
   }
@@ -85,15 +88,14 @@ void linkedListe<T>::supprimer( int i ){
   lisTmp->suivant = lvar;
 
   // Cas ou l'element a supprimer est au debut de la liste
-  if ( listDel == list ){
-
+  if ( listDel == list )
+  {
     list = list->suivant;
     lisTmp = NULL;
     delete lisTmp; // Libere memoire de la liste temporaire
   }
 
   delete listDel; // Libere memoire
-
   sizeList--;
 }
 
@@ -103,19 +105,19 @@ void linkedListe<T>::supprimer( int i ){
  *
 */
 template <class T>
-T* linkedListe<T>::get( int i ){
+T* linkedListe<T>::get(int i)
+{
 
-  if ( list == NULL ){
-
+  if ( list == NULL )
+  {
     cout << "Impossible de retourner un élément d'une liste vide !\n";
     exit(EXIT_FAILURE);
   }
 
   lvar = list;
 
-
-  while( i > 0 && lvar->suivant != NULL ){
-
+  while( i > 0 && lvar->suivant != NULL)
+  {
     lvar = lvar->suivant;
     i--;
   }
@@ -128,11 +130,11 @@ T* linkedListe<T>::get( int i ){
  *
 */
 template <class T>
-int linkedListe<T>::size(){
+int linkedListe<T>::size()
+{
 
   return sizeList;
 }
-
 
 
 /**
@@ -140,10 +142,11 @@ int linkedListe<T>::size(){
  *
 */
 template <class T>
-void linkedListe<T>::libererListe( Liste<T> L ){
+void linkedListe<T>::libererListe(Liste<T>* L)
+{
 
-  if ( L != NULL ){
-
+  if ( L != NULL )
+  {
     libererListe( L->suivant );
     delete L;
   }
@@ -153,7 +156,8 @@ void linkedListe<T>::libererListe( Liste<T> L ){
  * Libere toute la liste
 */
 template <class T>
-void linkedListe<T>::free(){
+void linkedListe<T>::free()
+{
 
   libererListe(list);
   libererListe(lvar);

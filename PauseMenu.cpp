@@ -1,6 +1,6 @@
 #include "header/PauseMenu.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
 
 PauseMenu::PauseMenu()
 {
@@ -52,8 +52,13 @@ PauseMenu::PauseMenu(float width, float height)
   texts.push_back(sf::Text(text));
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions d'observations
+
+
+
+
+//Fonctions d'observations ---------------------------------------------------
 
 int PauseMenu::getEnter()
 {
@@ -83,9 +88,13 @@ sf::Sprite PauseMenu::getSprite()
   return sprite;
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions de transmorfations
 
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
 
 //Return 1 si on affiche le menu, 0 sinon
 void PauseMenu::choix()
@@ -152,3 +161,5 @@ void PauseMenu::setTexture()
   sprite.setTexture(this->texture);
   sprite.scale(0.7,0.7);
 }
+
+// ---------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 #include "header/Couche.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
+
 Couche::Couche()
 {
 
@@ -12,8 +13,14 @@ Couche::Couche(const std::string FILENAME,int NbLigneInTxt)
   this->openMap(FILENAME,NbLigneInTxt);
 }
 
+// ---------------------------------------------------------------------------
 
-// Fonctions d'observations
+
+
+
+
+
+//Fonctions d'observations ---------------------------------------------------
 
 float Couche::getWitdh()
 {
@@ -98,9 +105,20 @@ void Couche::openMap(const std::string FILENAME,int NbLigneInTxt)
   tileSetWidth = stod(line[4]);
   tileSetHeight = stod(line[5]);
 
+  delete [] line;
+
 }
 
-// Fonctions de transformations
+// ---------------------------------------------------------------------------
+
+
+
+
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Couche::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
@@ -159,5 +177,6 @@ void Couche::drawMap(sf::RenderWindow* WINDOW)
       WINDOW->draw(tileSetSprite); // Affiche les sprites avec leur texture
     }
   }
-
 }
+
+// ---------------------------------------------------------------------------

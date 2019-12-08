@@ -17,15 +17,24 @@ class Atq1 : public Attaque
 
   public:
 
-  // Constructeurs
+  // Constructeurs ----------------------------
+
   Atq1(const std::string FILENAME);
 
-  // Fonctions d'observations
+  // ------------------------------------------
 
-  // Fonctions de transformations
+  // Fonctions d'observations -----------------
+
+  // ------------------------------------------
+
+
+  // Fonctions de transformations -------------
+  
   void moveP(float b);
   void moveE(float b);
   void addProj(float posX, float poxY, float scaleX, float scaleY, float widthSprite);
+
+  // ------------------------------------------
 
 
 

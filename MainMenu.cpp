@@ -1,6 +1,6 @@
 #include "header/MainMenu.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
 
 MainMenu::MainMenu()
 {
@@ -95,7 +95,7 @@ MainMenu::MainMenu(float width, float height)
   texts.push_back(sf::Text(text));
 
   // UI pour le premier menu
-  textureUI.loadFromFile("Menu/UI_bloc3k.png");
+  textureUI.loadFromFile("Menu/UI_block3.png");
   spriteUI.setTexture(textureUI);
   spriteUI.setPosition(540,540);
   titreSprite.push_back(sf::Sprite(spriteUI));
@@ -116,8 +116,11 @@ MainMenu::MainMenu(float width, float height)
 
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions d'observations
+
+
+//Fonctions d'observations ---------------------------------------------------
 
 int MainMenu::getEnter()
 {
@@ -147,9 +150,13 @@ sf::Sprite MainMenu::getSprite()
   return sprite;
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions de transmorfations
 
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
 
 //Return 1 si on affiche le menu, 0 sinon
 void MainMenu::choix()
@@ -197,3 +204,5 @@ void MainMenu::setTexture()
   sprite.setTexture(this->texture);
   sprite.scale(0.7,0.7);
 }
+
+// ---------------------------------------------------------------------------

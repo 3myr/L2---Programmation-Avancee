@@ -42,6 +42,7 @@ class Menu
   int getMenuEtat();
   float getTime();
   int isPlaying();
+  int getSelectedItemIndex();
 
   // Fonctions de transformations
   void setTime(float VAL);
@@ -49,6 +50,7 @@ class Menu
   void setMenuEtat(int val);
   void setPlaying();
   void playSound();
+  void stopSound();
   void pauseSound();
   void drawUi(sf::RenderWindow* window);
 

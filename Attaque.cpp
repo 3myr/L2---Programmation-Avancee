@@ -1,14 +1,21 @@
 #include "header/Attaque.h"
 
-// Methode constructive
+// Methode constructive -----------------------------------------------------
 
 Attaque::Attaque(const std::string FILENAME)
 {
   projectile.setTexture(FILENAME);
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions d'observations
+
+
+
+
+
+//Fonctions d'observations ---------------------------------------------------
+
 sf::Sprite Attaque::getSpritePro(int i)
 {
   return projectiles[i].getSprite();
@@ -34,8 +41,13 @@ string Attaque::getName()
   return name;
 }
 
+// ---------------------------------------------------------------------------
 
-//Fonctions de transmorfations
+
+
+
+//Fonctions de transmorfations -----------------------------------------------
+
 void Attaque::setTextureProj(const std::string FILENAME)
 {
   projectile.setTexture(FILENAME);
@@ -70,3 +82,5 @@ void Attaque::erase(int i)
 {
   projectiles.erase(projectiles.begin()+i);
 }
+
+// ---------------------------------------------------------------------------
