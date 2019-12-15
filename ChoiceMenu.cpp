@@ -1,3 +1,9 @@
+/**
+ * \file ChoiceMenu.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/ChoiceMenu.h"
 
 // Methode constructive -----------------------------------------------------

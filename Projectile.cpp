@@ -1,3 +1,9 @@
+/**
+ * \file Projectile.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Projectile.h"
 
 // Methode constructive -----------------------------------------------------

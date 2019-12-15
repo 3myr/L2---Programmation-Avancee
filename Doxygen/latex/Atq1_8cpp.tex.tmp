@@ -1,0 +1,16 @@
+\hypertarget{Atq1_8cpp}{}\section{Atq1.\+cpp File Reference}
+\label{Atq1_8cpp}\index{Atq1.\+cpp@{Atq1.\+cpp}}
+{\ttfamily \#include \char`\"{}header/\+Atq1.\+h\char`\"{}}\newline
+Include dependency graph for Atq1.\+cpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Demazieres Remy 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+15 decembre 2019 
+\end{DoxyDate}

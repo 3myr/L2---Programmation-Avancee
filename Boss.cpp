@@ -1,3 +1,9 @@
+/**
+ * \file Boss.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Boss.h"
 
 // Methode constructive -----------------------------------------------------

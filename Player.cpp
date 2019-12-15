@@ -1,3 +1,9 @@
+/**
+ * \file Player.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Player.h"
 
 // Methode constructive -----------------------------------------------------

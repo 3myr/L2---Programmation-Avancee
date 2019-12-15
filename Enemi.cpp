@@ -1,3 +1,9 @@
+/**
+ * \file Enemi.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Enemi.h"
 
 // Methode constructive -----------------------------------------------------

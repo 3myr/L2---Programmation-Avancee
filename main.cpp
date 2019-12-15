@@ -1,3 +1,12 @@
+
+/**
+ * \file main.cpp
+ * \brief Main
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
+
 #include "Vaisseau.cpp"
 #include "Attaque.cpp"
 #include "Player.cpp"

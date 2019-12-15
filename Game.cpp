@@ -1,3 +1,9 @@
+/**
+ * \file Game.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Game.h"
 
 // Methode constructive -----------------------------------------------------
@@ -623,6 +629,7 @@ void Game::free()
   {
     b.getCouche(i)->free();
   }
+
   if(bonus.size()>0)
   {
     for(int i=0;i<bonus.size();i++)
@@ -630,12 +637,21 @@ void Game::free()
       delete bonus.get(i);
     }
   }
+
+
   delete boss;
   delete mm;
   delete cm;
   delete pm;
   delete ui;
-
+  delete p;
+  for(int i=0;i<enemisPero.size();i++)
+  {
+    if(enemisPero.size()>0)
+    {
+      delete enemisPero.get(i);
+    }
+  }
 }
 
 /**

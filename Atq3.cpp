@@ -1,3 +1,9 @@
+/**
+ * \file Atq3.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Atq3.h"
 
 // Methode constructive -----------------------------------------------------

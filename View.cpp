@@ -1,3 +1,9 @@
+/**
+ * \file View.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/View.h"
 
 // Methode constructive -----------------------------------------------------

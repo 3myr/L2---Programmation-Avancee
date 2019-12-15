@@ -1,3 +1,9 @@
+/**
+ * \file PauseMenu.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/PauseMenu.h"
 
 // Methode constructive -----------------------------------------------------

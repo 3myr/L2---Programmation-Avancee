@@ -1,3 +1,9 @@
+/**
+ * \file Menu.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Menu.h"
 
 // Methode constructive -----------------------------------------------------

@@ -1,3 +1,9 @@
+/**
+ * \file Background.cpp
+ * \author Demazieres Remy
+ * \date 15 decembre 2019
+ *
+ */
 #include "header/Background.h"
 
 // Methode constructive -----------------------------------------------------
