@@ -2,6 +2,9 @@
 
 // Methode constructive -----------------------------------------------------
 
+/**
+* \brief Instanciation d'un menu
+*/
 MainMenu::MainMenu()
 {
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
@@ -36,22 +39,34 @@ MainMenu::MainMenu()
 
 }
 
+/**
+* \brief Instanciation d'un menu
+*/
 MainMenu::MainMenu(float width, float height)
 {
+  // Charge la police d'ecriture
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
   {
     cout<<"Impossible de charger la police d'écriture"<<endl;
   }
-  if (!buffer.loadFromFile("Sounds/rasputin.wav"))
+
+  // Charge une musique-------------------
+  if (!buffer.loadFromFile("Sounds/tir.ogg"))
   {
     cout<<"Le sond n'a pas pu être chargé !"<<endl;
     exit(EXIT_FAILURE);
   }
   sound.setBuffer(buffer);
+  // --------------------------------------
   playing = 0;
 
   menuIsOn = 1;
   selectedItemIndex = 0;
+
+  Time = 0;
+
+
+  // Instancie les différents elements d'un menu
 
   // UI pour le titre
   titleTexture.loadFromFile("Menu/Title.png");
@@ -75,7 +90,7 @@ MainMenu::MainMenu(float width, float height)
   spriteUI.setPosition(540,380);
   titreSprite.push_back(sf::Sprite(spriteUI));
 
-  text.setString("Nouvelle partie");
+  text.setString("Nouveau");
   //text.setPosition(width, (height));
   text.setPosition(555, 470);
   text.setScale(1,1);
@@ -87,13 +102,6 @@ MainMenu::MainMenu(float width, float height)
   titreSprite.push_back(sf::Sprite(spriteUI));
 
 
-  text.setString("Options");
-  //text.setPosition(width, (height));
-  text.setPosition(555, 555);
-  text.setScale(1,1);
-  text. setFillColor(sf::Color::White);
-  texts.push_back(sf::Text(text));
-
   // UI pour le premier menu
   textureUI.loadFromFile("Menu/UI_block3.png");
   spriteUI.setTexture(textureUI);
@@ -103,17 +111,12 @@ MainMenu::MainMenu(float width, float height)
 
   text.setString("Quitter");
   //text.setPosition(width, (height));
-  text.setPosition(555, 630);
+  text.setPosition(555, 550);
   text.setScale(1,1);
   text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
 
-  // UI pour le premier menu
-  textureUI.loadFromFile("Menu/UI_block3.png");
-  spriteUI.setTexture(textureUI);
-  spriteUI.setPosition(540,620);
-  titreSprite.push_back(sf::Sprite(spriteUI));
-
+  // -------------------------------------------------------
 }
 
 // ---------------------------------------------------------------------------
@@ -122,6 +125,9 @@ MainMenu::MainMenu(float width, float height)
 
 //Fonctions d'observations ---------------------------------------------------
 
+/**
+* \brief Gère l'evenement qui se produit quand l'utilisateur appuie sur entrer
+*/
 int MainMenu::getEnter()
 {
   //Choisit un onglet
@@ -145,6 +151,9 @@ int MainMenu::getEnter()
   return -1;
 }
 
+/**
+* \brief
+*/
 sf::Sprite MainMenu::getSprite()
 {
   return sprite;
@@ -158,7 +167,9 @@ sf::Sprite MainMenu::getSprite()
 
 //Fonctions de transmorfations -----------------------------------------------
 
-//Return 1 si on affiche le menu, 0 sinon
+/**
+* \brief Fonction qui gere le choix de l'utilisateur dans le menu
+*/
 void MainMenu::choix()
 {
   if(menuIsOn == 1)
@@ -168,7 +179,7 @@ void MainMenu::choix()
     {
       Time = 0;
       texts[selectedItemIndex]. setFillColor(sf::Color::White);
-      if(selectedItemIndex == 3)
+      if(selectedItemIndex == 2)
       {
         selectedItemIndex = 0;
       }
@@ -186,7 +197,7 @@ void MainMenu::choix()
       texts[selectedItemIndex]. setFillColor(sf::Color::White);
       if(selectedItemIndex == 0)
       {
-        selectedItemIndex = 3;
+        selectedItemIndex = 2;
       }
       else
       {
@@ -197,7 +208,9 @@ void MainMenu::choix()
   }
 }
 
-
+/**
+* \brief
+*/
 void MainMenu::setTexture()
 {
   texture.loadFromFile("Background/menu.jpg");

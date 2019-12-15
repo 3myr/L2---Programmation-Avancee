@@ -35,7 +35,6 @@ protected:
 
   vector<Attaque*> atqs; // Allocation memoire; quand change attaque desalloué memoire puis refaire allocations
 
-
 public:
 
   // Constructeurs
@@ -44,7 +43,6 @@ public:
   Vaisseau(const std::string FILENAME,int NbLigneInTxt);
 
   // Fonctions d'observations
-  virtual void affiche();
   sf::Sprite getSprite();
   sf::Texture getTexture();
   float getShootTime();
@@ -64,7 +62,9 @@ public:
   void setShootTime(float VAL);
   int collision(Vaisseau* v2);
   int collision(Projectile p);
-  void loadVar(const std::string FILENAME,int NbLigneInTxt);
+  int collisionProjectile(Vaisseau* e);
+
+  virtual void loadVar(const std::string FILENAME,int NbLigneInTxt);
   virtual void attaque(Background b);
   virtual void deplacement(Background b);
   void stayInScreen(Background b);
@@ -72,7 +72,8 @@ public:
   Vaisseau copyVaisseau(Vaisseau* e);
   void free();
   void setScale(float x,float y);
-
+  void setPv(float x);
+  virtual void freeAtq(Background b);
 
 };
 #endif

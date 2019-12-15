@@ -2,21 +2,37 @@
 
 // Methode constructive -----------------------------------------------------
 
+/**
+* \brief Instanciation d'un vaisseau
+*/
 Vaisseau::Vaisseau() : shootTime(0)
 {
 
 }
 
+/**
+* \brief Instanciation d'un vaisseau
+*/
 Vaisseau::Vaisseau(float x, float y, sf::Texture texture, int pv, int atqSpeed, float speed ) : x(x), y(y), texture(texture), pv(pv), atqSpeed(atqSpeed), speed(speed), shootTime(0)
 {
 
 }
 
+/**
+* \brief Instanciation d'un vaisseau
+*/
 Vaisseau::Vaisseau(const std::string FILENAME,int NbLigneInTxt) : shootTime(0)
 {
-  this->loadVar(FILENAME,NbLigneInTxt);
-  texture.loadFromFile(filename);
-  sprite.setScale(0.25,0.25);
+  try
+  {
+    this->loadVar(FILENAME,NbLigneInTxt);
+    texture.loadFromFile(filename);
+  }
+  catch(std::exception const& e)
+  {
+    cout<<"CHAMP INCORRECT, MODIFIER LE FICHIER TXT !"<<endl;
+    exit(EXIT_FAILURE);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -27,72 +43,97 @@ Vaisseau::Vaisseau(const std::string FILENAME,int NbLigneInTxt) : shootTime(0)
 
 //Fonctions d'observations ---------------------------------------------------
 
-void Vaisseau::affiche()
-{
-  cout<<"\nx : "<<x<<endl;
-  cout<<"y : "<<y<<endl;
-  cout<<"x de la texture: "<<texture.getSize().x<<endl;
-  cout<<"x de la texture: "<<texture.getSize().y<<endl;
-  cout<<"pv : "<<pv<<endl;
-  cout<<"atqSpeed : "<<atqSpeed<<endl;
-  cout<<"speed : " <<speed<<endl;
-}
-
+/**
+* \brief
+*/
 sf::Sprite Vaisseau::getSprite()
 {
   return sprite;
 }
 
+/**
+* \brief
+*/
 sf::Texture Vaisseau::getTexture()
 {
   return texture;
 }
 
+/**
+* \brief
+*/
 float Vaisseau::getShootTime()
 {
   return shootTime;
 }
 
+/**
+* \brief
+*/
 int Vaisseau::getAtqSpeed()
 {
   return atqSpeed;
 }
 
+/**
+* \brief
+*/
 sf::Sprite Vaisseau::getSpritePro(int i) // CHANGER TOUT CA
 {
   return atqs[i]->getSpritePro(i);
 }
 
+/**
+* \brief
+*/
 int Vaisseau::getSizeProj(int i)
 {
   return atqs[i]->getSizeProj();
 }
 
+/**
+* \brief
+*/
 Projectile Vaisseau::getProjectile(int i)
 {
   return atqs[i]->getProjectile(i);
 }
 
+/**
+* \brief
+*/
 vector<Projectile> Vaisseau::getProjectiles(int i)
 {
   return atqs[i]->getProjectiles();
 }
 
+/**
+* \brief
+*/
 int Vaisseau::getSizeAtqs()
 {
   return atqs.size();
 }
 
+/**
+* \brief
+*/
 int Vaisseau::getPv()
 {
   return pv;
 }
 
+/**
+* \brief
+*/
 float Vaisseau::getSpeed()
 {
   return speed;
 }
 
+/**
+* \brief
+*/
 float Vaisseau::getPosition()
 {
   return sprite.getPosition().x;
@@ -107,37 +148,76 @@ float Vaisseau::getPosition()
 
 //Fonctions de transmorfations -----------------------------------------------
 
+/**
+* \brief
+*/
 void Vaisseau::setTexture()
 {
   sprite.setTexture(texture);
   sprite.setPosition(x,y);
 }
 
+/**
+* \brief Gere collision entre deux vaisseau
+*/
 int Vaisseau::collision(Vaisseau* v2)
 {
-  if(    this->getSprite().getPosition().x < v2->getSprite().getPosition().x + v2->getTexture().getSize().x * v2->getSprite().getScale().x
-      && this->getSprite().getPosition().x + this->getTexture().getSize().x * this->getSprite().getScale().x > v2->getSprite().getPosition().x
-      && this->getSprite().getPosition().y < v2->getSprite().getPosition().y + v2->getTexture().getSize().y * v2->getSprite().getScale().y
-      && this->getSprite().getPosition().y + this->getTexture().getSize().y * this->getSprite().getScale().y > v2->getSprite().getPosition().y)
+  if(    this->getSprite().getPosition().x < v2->getSprite().getPosition().x + v2->getSprite().getGlobalBounds().width
+      && this->getSprite().getPosition().x + this->getSprite().getGlobalBounds().width > v2->getSprite().getPosition().x
+      && this->getSprite().getPosition().y < v2->getSprite().getPosition().y + v2->getSprite().getGlobalBounds().height
+      && this->getSprite().getPosition().y + this->getSprite().getGlobalBounds().height > v2->getSprite().getPosition().y)
   {
     return 1;
   }
   return 0;
 }
 
+/**
+* \brief Gere collision avec un projectile
+*/
 int Vaisseau::collision(Projectile p)
 {
 
-  if(    this->getSprite().getPosition().x < p.getSprite().getPosition().x + p.getTexture().getSize().x * p.getSprite().getScale().x
-      && this->getSprite().getPosition().x + this->getTexture().getSize().x * this->getSprite().getScale().x > p.getSprite().getPosition().x
-      && this->getSprite().getPosition().y < p.getSprite().getPosition().y + p.getTexture().getSize().y * p.getSprite().getScale().y
-      && this->getSprite().getPosition().y + this->getTexture().getSize().y * this->getSprite().getScale().y > p.getSprite().getPosition().y)
+  if(    this->getSprite().getPosition().x < p.getSprite().getPosition().x + p.getSprite().getGlobalBounds().width
+      && this->getSprite().getPosition().x + this->getSprite().getGlobalBounds().width > p.getSprite().getPosition().x
+      && this->getSprite().getPosition().y < p.getSprite().getPosition().y + p.getSprite().getGlobalBounds().height
+      && this->getSprite().getPosition().y + this->getSprite().getGlobalBounds().height > p.getSprite().getPosition().y)
   {
     return 1;
   }
   return 0;
 }
 
+/**
+* \brief Gere collision avec un projectile du joueur et un enemi
+*/
+int Vaisseau::collisionProjectile(Vaisseau* e)
+{
+  // Pour optimiser la recherche de collisions, on regarde la distance entre le premier projectile tiré et la distance entre celui-ci et le vaisseau enemi ainsi que la distance entre un vaisseau enemi et le player
+  if(atqs.size()>0)
+  {
+    if(atqs[0]->getProjectile(0).getPosition() - e->getSprite().getPosition().x < 50 || this->getSprite().getPosition().x - e->getSprite().getPosition().x < 20)
+    //if(true)
+    {
+      for(int i=0;i<atqs.size();i++)
+      {
+        for(int j=0;j<atqs[i]->getSizeProj();j++)
+        {
+          if(e->collision(atqs[i]->getProjectile(j))==1)
+          {
+            atqs[i]->erase(j);
+            return 1; // efface vaisseau
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
+
+/**
+* \brief Charge les informations relative a un vaisseau avec des informations contenu dans un txt
+*/
 void Vaisseau::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
@@ -173,9 +253,12 @@ void Vaisseau::loadVar(const std::string FILENAME,int NbLigneInTxt)
   {
     cout << "Impossible d'ouvrir le fichier";
   }
-  //free(line); // Probleme de liberation de memoire
+  delete [] line;
 }
 
+/**
+* \brief
+*/
 void Vaisseau::setShootTime(float VAL)
 {
   if(VAL==-1)
@@ -188,24 +271,37 @@ void Vaisseau::setShootTime(float VAL)
   }
 }
 
+/**
+* \brief
+*/
 void Vaisseau::attaque(Background b)
 {
 
 }
 
+/**
+* \brief Fonction qui gère le deplacement d'un vaisseau
+*/
 void Vaisseau::deplacement(Background b)
 {
 
 }
 
+/**
+* \brief Restreint la zone de deplacement d'un vaisseau en fonction de la camera
+*/
 void Vaisseau::stayInScreen(Background b)
 {
+
   if(this->sprite.getPosition().x < b.getView().getCenter().x-b.getWitdhView()/2)
   {
     sprite.move(b.getMainView().getSpeed(),0);
   }
 }
 
+/**
+* \brief Affiche les attaques
+*/
 void Vaisseau::drawAttaque(sf::RenderWindow* window,int i)
 {
   for(int j=0;j<atqs[i]->getSizeProj();j++)
@@ -214,6 +310,9 @@ void Vaisseau::drawAttaque(sf::RenderWindow* window,int i)
   }
 }
 
+/**
+* \brief
+*/
 void Vaisseau::free()
 {
   for (auto p : atqs)
@@ -224,9 +323,28 @@ void Vaisseau::free()
 
 }
 
+/**
+* \brief
+*/
 void Vaisseau::setScale(float x,float y)
 {
   sprite.setScale(x,y);
+}
+
+/**
+* \brief
+*/
+void Vaisseau::setPv(float x)
+{
+  pv = pv + x;
+}
+
+/**
+* \brief
+*/
+void Vaisseau::freeAtq(Background b)
+{
+
 }
 
 // ---------------------------------------------------------------------------

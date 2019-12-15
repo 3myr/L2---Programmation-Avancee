@@ -51,7 +51,6 @@ class Background
   void setView(View VIEW);
   void movingView();
   void setMovingTime(float VAL);
-  void setCouche(const std::string LEVELNAME);
 
 
 }

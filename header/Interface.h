@@ -7,6 +7,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Background.h"
+#include "Player.h"
 
 
 using namespace std;
@@ -20,7 +21,6 @@ class Interface
     sf::Texture texture;
 
     // Score du joueur
-    int score;
     sf::Text scoreText;
 
     // Gestion de text
@@ -31,6 +31,7 @@ class Interface
     sf::Font fontFPS;
     sf::Text textFPS;
     sf::Time frameTime;
+    int score;
 
     // Gestion des animations / raffraichissement
     float Time;
@@ -50,6 +51,7 @@ class Interface
   sf::Text getScoreText();
   float getTime();
   int size();
+  int getScore();
 
 
 
@@ -61,6 +63,7 @@ class Interface
   void setFPS();
   void setPositionFPS(float x, float y);
   void drawFPS(sf::RenderWindow* window);
+  void drawScore(sf::RenderWindow* window);
   void setScore(int i);
 
 

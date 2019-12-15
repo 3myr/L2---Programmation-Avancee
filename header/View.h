@@ -30,7 +30,6 @@ class View
 
 
   // Fonctions d'observations
-  void affiche();
   sf::View getView();
   float getWidth() const;
   float getHeight() const;

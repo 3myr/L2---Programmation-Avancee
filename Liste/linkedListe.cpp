@@ -6,7 +6,7 @@ using namespace std;
 // Constructeur
 
 /**
- * Construction  de la liste vide
+ * \brief Construction  de la liste vide
 */
 template <class T>
 linkedListe<T>::linkedListe()
@@ -18,7 +18,7 @@ linkedListe<T>::linkedListe()
 }
 
 /**
- * Ajoute un element dans la liste
+ * \brief Ajoute un element dans la liste
  *
 */
 template <class T>
@@ -52,7 +52,7 @@ void linkedListe<T>::ajouter(T* v)
 }
 
 /**
- * Supprime un Vaisseau a un indice passé en parametre
+ * \brief Supprime un Vaisseau a un indice passé en parametre
  *
 */
 template <class T>
@@ -66,8 +66,8 @@ void linkedListe<T>::supprimer(int i)
   }
 
   lvar = list;
-  Liste<T>* lisTmp = new Liste<T>;
-  Liste<T>* listDel = new Liste<T>;   // Liste a supprimer
+  Liste<T>* lisTmp = lvar;
+  Liste<T>* listDel = lvar;   // Liste a supprimer
 
 
   //On cherche à atteindre la position i
@@ -95,13 +95,13 @@ void linkedListe<T>::supprimer(int i)
     delete lisTmp; // Libere memoire de la liste temporaire
   }
 
+  listDel = NULL;
   delete listDel; // Libere memoire
   sizeList--;
 }
 
 /**
- * Retourne un Vaisseau situé a un indice passé en paramètre
- *
+ * \brief Retourne un Vaisseau situé a un indice passé en paramètre
  *
 */
 template <class T>
@@ -126,7 +126,7 @@ T* linkedListe<T>::get(int i)
 }
 
 /**
- * Retourne la taille de la liste
+ * \brief Retourne la taille de la liste
  *
 */
 template <class T>
@@ -138,8 +138,7 @@ int linkedListe<T>::size()
 
 
 /**
- * Libere la liste passé en paramètre
- *
+ * \brief Libere la liste passé en paramètre
 */
 template <class T>
 void linkedListe<T>::libererListe(Liste<T>* L)
@@ -153,7 +152,7 @@ void linkedListe<T>::libererListe(Liste<T>* L)
 }
 
 /**
- * Libere toute la liste
+ * \brief Libere toute la liste
 */
 template <class T>
 void linkedListe<T>::free()

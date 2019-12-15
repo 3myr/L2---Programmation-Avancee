@@ -2,14 +2,23 @@
 
 // Methode constructive -----------------------------------------------------
 
+/**
+* \brief Instancie un level
+*/
 Background::Background()
 {
 
 }
 
+/**
+* \brief Instancie un level avec ces différentes "couches"
+*/
 Background::Background(const std::string FILENAMEVIEW,int NbLigneInTxtView)
 {
+  // Charge les données de la caméra ( taille, vitesse, etc..)
   this->setView(View(FILENAMEVIEW,NbLigneInTxtView));
+
+  movingTime = 0;
 
   // initialisation des couches
   Couche* c = new Couche("Background/background.txt",7);
@@ -45,36 +54,57 @@ Background::Background(const std::string FILENAMEVIEW,int NbLigneInTxtView)
 
 //Fonctions d'observations ---------------------------------------------------
 
+/**
+* \brief
+*/
 sf::View Background::getView()
 {
   return mainView.getView();
 }
 
+/**
+* \brief Retourne la clock pour gerer le deplacement de la camera
+*/
 float Background::getMovingTime()
 {
   return movingTime;
 }
 
+/**
+* \brief Retourne la largeur de la camera
+*/
 float Background::getWitdhView()
 {
   return mainView.getWidth();
 }
 
+/**
+* \brief Retourne la hauteur de la camera
+*/
 float Background::getHeightView()
 {
   return mainView.getHeight();
 }
 
+/**
+* \brief Retounre la camera ( l'objet )
+*/
 View Background::getMainView()
 {
   return mainView;
 }
 
+/**
+* \brief
+*/
 Couche* Background::getCouche(int i)
 {
   return couches[i];
 }
 
+/**
+* \brief Retourne toutes les couches
+*/
 vector<Couche*> Background::getCouches()
 {
   return couches;
@@ -88,6 +118,9 @@ vector<Couche*> Background::getCouches()
 
 //Fonctions de transmorfations -----------------------------------------------
 
+/**
+* \brief Charge les données présente dans un fichier texte
+*/
 void Background::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
@@ -115,12 +148,17 @@ void Background::loadVar(const std::string FILENAME,int NbLigneInTxt)
   delete [] line;
 }
 
-
+/**
+* \brief
+*/
 void Background::setView(View VIEW)
 {
   mainView = VIEW;
 }
 
+/**
+* \brief Deplace la camera
+*/
 void Background::movingView()
 {
   if(movingTime>1)
@@ -130,8 +168,12 @@ void Background::movingView()
   }
 }
 
+/**
+* \brief
+*/
 void Background::setMovingTime(float VAL)
 {
+  // Reinitialisation de la clock a 0
   if(VAL==-1)
   {
     movingTime = 0;
@@ -140,11 +182,6 @@ void Background::setMovingTime(float VAL)
   {
     movingTime = movingTime + VAL;
   }
-}
-
-void Background::setCouche(const std::string LEVELNAME)
-{
-
 }
 
 

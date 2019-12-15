@@ -2,11 +2,17 @@
 
 // Methode constructive -----------------------------------------------------
 
+/**
+* \brief Instanciation des projectiles
+*/
 Projectile::Projectile()
 {
 
 }
 
+/**
+* \brief Instanciation des projectiles
+*/
 Projectile::Projectile(const std::string FILENAME) : speed(0.001)
 {
   texture.loadFromFile(FILENAME);
@@ -24,27 +30,25 @@ Projectile::Projectile(const std::string FILENAME) : speed(0.001)
 
 //Fonctions d'observations ---------------------------------------------------
 
-void Projectile::affiche()
-{
-  cout<<"\nx projectile: "<<x<<endl;
-  cout<<"y projectile: "<<y<<endl;
-  cout<<"nbDegats projectile: "<<nbDegats<<endl;
-  cout<<"x de la texture: "<<texture.getSize().x<<endl;
-  cout<<"y de la texture: "<<texture.getSize().y<<endl;
-  cout<<"x du sprite: "<<sprite.getPosition().x<<endl;
-  cout<<"y du sprite: "<<sprite.getPosition().y<<endl;
-}
-
+/**
+* \brief
+*/
 sf::Sprite Projectile::getSprite()
 {
   return sprite;
 }
 
+/**
+* \brief
+*/
 float Projectile::getPosition()
 {
   return sprite.getPosition().x;
 }
 
+/**
+* \brief
+*/
 sf::Texture Projectile::getTexture()
 {
   return texture;
@@ -58,11 +62,17 @@ sf::Texture Projectile::getTexture()
 
 //Fonctions de transmorfations -----------------------------------------------
 
+/**
+* \brief Deplacement d'un projectile
+*/
 void Projectile::move(float x, float y)
 {
   sprite.move(x,y);
 }
 
+/**
+* \brief
+*/
 void Projectile::setTexture(const std::string FILENAME)
 {
     texture.loadFromFile(FILENAME);
@@ -72,6 +82,9 @@ void Projectile::setTexture(const std::string FILENAME)
     sprite.setScale(0.25,0.25);
 }
 
+/**
+* \brief
+*/
 void Projectile::setPosition(float x,float y)
 {
   sprite.setPosition(x,y);

@@ -2,11 +2,15 @@
 
 // Methode constructive -----------------------------------------------------
 
+/**
+* \brief Instancie une attaque
+*/
 Atq2::Atq2(const std::string FILENAME) : Attaque(FILENAME)
 {
   name = "AT2";
   nbProjectiles = 3;
-  if(!buffer.loadFromFile("Sounds/tir.wav"))
+  // Charge le son pour les tire
+  if(!buffer.loadFromFile("Sounds/tir.ogg"))
   {
     cout<<"Le sond n'a pas pu être chargé !"<<endl;
     exit(EXIT_FAILURE);
@@ -30,7 +34,9 @@ Atq2::Atq2(const std::string FILENAME) : Attaque(FILENAME)
 
 
 //Fonctions de transmorfations -----------------------------------------------
-
+/**
+* \brief Deplacement du projectile pour un joueur
+*/
 void Atq2::moveP(float b)
 {
   //cout<<this->getName()<<endl;
@@ -58,6 +64,9 @@ void Atq2::moveP(float b)
   }
 }
 
+/**
+* \brief Deplacement du projectile pour un enemi
+*/
 void Atq2::moveE(float b)
 {
   for(int i=0;i<projectiles.size();i++) // Proj
@@ -71,13 +80,16 @@ void Atq2::moveE(float b)
   }
 }
 
+/**
+* \brief Ajoute un projectile a une position précise
+*/
 void Atq2::addProj(float posX, float poxY, float scaleX, float scaleY, float widthSprite)
 {
   for(int i=0;i<nbProjectiles;i++)
   {
     projectile.setPosition(posX+widthSprite*scaleX,poxY+(12+i*15)*scaleY);
     projectiles.push_back(Projectile(projectile));
-    sound.play();
+    sound.play(); // Joue le son du tir
   }
 }
 

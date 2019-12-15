@@ -1,16 +1,30 @@
 #include "header/Couche.h"
 
 // Methode constructive -----------------------------------------------------
-
+/**
+* \brief Instancie une couche
+*/
 Couche::Couche()
 {
 
 }
 
+/**
+* \brief Instancie une couche
+*/
 Couche::Couche(const std::string FILENAME,int NbLigneInTxt)
 {
-  this->loadVar(FILENAME,NbLigneInTxt);
-  this->openMap(FILENAME,NbLigneInTxt);
+  // Gere les ereurs quand les champs dans le fichier txt ne sont pas corrects
+  try
+  {
+    this->loadVar(FILENAME,NbLigneInTxt);
+    this->openMap(FILENAME,NbLigneInTxt);
+  }
+  catch(std::exception const& e)
+  {
+    cout<<"CHAMP INCORRECT, MODIFIER LE FICHIER TXT !"<<endl;
+    exit(EXIT_FAILURE);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -22,26 +36,41 @@ Couche::Couche(const std::string FILENAME,int NbLigneInTxt)
 
 //Fonctions d'observations ---------------------------------------------------
 
+/**
+* \brief
+*/
 float Couche::getWitdh()
 {
  return texture.getSize().x;
 }
 
+/**
+* \brief
+*/
 float Couche::getHeight()
 {
   return texture.getSize().y;
 }
 
+/**
+* \brief
+*/
 sf::Texture Couche::getTexture()
 {
   return texture;
 }
 
+/**
+* \brief
+*/
 sf::Sprite Couche::getSprite()
 {
   return sprite;
 }
 
+/**
+* \brief Charge une map en fonction des données d'un fichier texte
+*/
 void Couche::openMap(const std::string FILENAME,int NbLigneInTxt)
 {
 
@@ -119,6 +148,9 @@ void Couche::openMap(const std::string FILENAME,int NbLigneInTxt)
 
 //Fonctions de transmorfations -----------------------------------------------
 
+/**
+* \brief Charge les informations relative a une couche avec des informations contenu dans un txt
+*/
 void Couche::loadVar(const std::string FILENAME,int NbLigneInTxt)
 {
   //Allocation de mémoire pour les tableaux stockant les valeurs des variables du fichier .txt
@@ -143,21 +175,30 @@ void Couche::loadVar(const std::string FILENAME,int NbLigneInTxt)
   {
     cout << "Impossible d'ouvrir le fichier";
   }
-  //free(line); // Probleme de liberation de memoire
+  delete [] line;
 }
 
+/**
+* \brief
+*/
 void Couche::setTexture()
 {
   sprite.setTexture(texture);
   //sprite.setPosition(x,y);
 }
 
+/**
+* \brief
+*/
 void Couche::setTextureTileSet()
 {
   tileSetTexture.loadFromFile(tileSetTextureName);
   tileSetSprite.setTexture(tileSetTexture);
 }
 
+/**
+* \brief
+*/
 void Couche::drawMap(sf::RenderWindow* WINDOW)
 {
   int tilecount =-1;
@@ -177,6 +218,14 @@ void Couche::drawMap(sf::RenderWindow* WINDOW)
       WINDOW->draw(tileSetSprite); // Affiche les sprites avec leur texture
     }
   }
+}
+
+/**
+* \brief
+*/
+void Couche::free()
+{
+  delete [] map;
 }
 
 // ---------------------------------------------------------------------------

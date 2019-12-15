@@ -2,9 +2,20 @@
 
 // Methode constructive -----------------------------------------------------
 
-Game::Game(RenderWindow* window)
+/**
+* \brief Instanciation d'un jeu
+*/
+Game::Game(RenderWindow* window) : timer(0)
 {
   this->window = window;
+
+  // Charge le son quand le joueur se fait toucher
+  if (!buffer.loadFromFile("Sounds/explosion.wav"))
+  {
+    cout<<"Le sond n'a pas pu être chargé !"<<endl;
+    exit(EXIT_FAILURE);
+  }
+  sound.setBuffer(buffer);
 }
 
 // ---------------------------------------------------------------------------
@@ -17,29 +28,35 @@ Game::Game(RenderWindow* window)
 //Fonctions d'observations ---------------------------------------------------
 
 /**
-* Gestion du Menu Principal
-*
+* \brief Gestion du Menu Principal
 */
 int Game::checkMainMenu()
 {
+  // Probleme sous VM, le setTime() du menu principal prend une valeur érroné ( -2.1597e+09 )
   mm->choix();
   if(mm->getMenuEtat()==1)
   {
     switch (mm->getEnter())
     {
+      case 0:
+        this->refreshVariables();
+        if(p->getLevel()>=1)
+        {
+          cm->unlockLevel();
+        }
+        cm->setMenuEtat(1);
+        cm->setTime(-1);
+        break;
+
       case 1:
+        this->newGameVariables();
         cm->setMenuEtat(1);
         cm->setTime(-1);
         break;
 
       case 2:
-        cm->setMenuEtat(1);
-        cm->setTime(-1);
-        break;
-
-      case 3:
-        mm->setMenuEtat(0);
-        exit(EXIT_SUCCESS);
+      mm->setMenuEtat(0);
+      exit(EXIT_SUCCESS);
         break;
     }
 
@@ -47,7 +64,7 @@ int Game::checkMainMenu()
     window->clear();
     window->draw(mm->getSprite());
     mm->drawUi(window);
-    for(int i=0;i<4;i++)
+    for(int i=0;i<3;i++)
     {
       window->draw(mm->getText(i));
     }
@@ -59,7 +76,7 @@ int Game::checkMainMenu()
 }
 
 /**
-* Gestion du Menu Pause
+* \brief Gestion du Menu Pause
 *
 */
 int Game::checkPauseMenu()
@@ -108,7 +125,7 @@ int Game::checkPauseMenu()
 }
 
 /**
-* Gestion du Menu de choix de level
+* \brief Gestion du Menu de choix de level
 *
 */
 int Game::checkChoiceMenu()
@@ -124,8 +141,11 @@ int Game::checkChoiceMenu()
         break;
 
       case 1:
-        cm->setMenuEtat(0);
-        // Faire rentrer dans le level 2
+        if(p->getLevel()>=1)
+        {
+          cm->setMenuEtat(0);
+          // Faire rentrer dans le level 2
+        }
         break;
 
       case 2:
@@ -164,20 +184,22 @@ int Game::checkChoiceMenu()
 //Fonctions de transmorfations -----------------------------------------------
 
 /**
-* Initialise les variables du jeu
+* \brief Initialise les variables du jeu
 *
 */
 void Game::initVariables()
 {
 
   //Initialisation des personnages et du Décor
-  this->p = Player("Character/player.txt",6); // Nombre de ligne
-  this->p.setTexture(); // Chercher a enlever
+  this->p = new Player("Character/playerDefault.txt",9); // Nombre de ligne
+  this->p->setTexture(); // Chercher a enlever
   this->enemisPero = linkedListe<Enemi>();
   this->placementEnemi();
   this->b = Background("Background/view.txt",3);
   this->boss = new Boss("Character/boss.txt",6);
   this->boss->setTexture();
+  this->bonus = linkedListe<Bonus>();
+  this->placementBonus();
 
 
   // Initialisation des menus
@@ -187,23 +209,69 @@ void Game::initVariables()
   this->cm = new ChoiceMenu(this->b.getWitdhView(),this->b.getHeightView());
   this->cm->setTexture();
   this->ui = new Interface(this->b.getWitdhView(),this->b.getHeightView());
+}
+
+/**
+* \brief Recharge les données du jeux
+*
+*/
+void Game::refreshVariables()
+{
+  //Charge les données des personnages et du Décor
+  this->p = new Player("Character/player.txt",9); // Nombre de ligne
+  this->p->setTexture(); // Chercher a enlever
+  this->enemisPero = linkedListe<Enemi>();
+  this->placementEnemi();
+  this->b = Background("Background/view.txt",3);
+  this->boss = new Boss("Character/boss.txt",6);
+  this->boss->setTexture();
+  this->ui->setScore(p->getScore());
+  this->bonus = linkedListe<Bonus>();
+  this->placementBonus();
 
 }
 
 /**
-* Permet de mettre une clock pour les différentes classes
+* \brief Recharge les données du jeux avec les valeurs par défauts
+*
+*/
+void Game::newGameVariables()
+{
+  //Charge les données des personnages et du Décor
+  this->p = new Player("Character/playerDefault.txt",9); // Nombre de ligne
+  this->p->setTexture(); // Chercher a enlever
+  this->enemisPero = linkedListe<Enemi>();
+  this->placementEnemi();
+  this->b = Background("Background/view.txt",3);
+  this->boss = new Boss("Character/boss.txt",6);
+  this->boss->setTexture();
+  this->ui->setScore(p->getScore());
+  this->cm->lockedAllLevel();
+  this->bonus = linkedListe<Bonus>();
+  this->placementBonus();
+
+}
+
+
+/**
+* \brief Permet de mettre une clock pour les différentes classes
 *
 */
 void Game::setTime()
 {
   //Recupération du temps pour les différents événements
 
+  // Clock pour les menus
+  this->mm->setTime(this->clock.getElapsedTime().asMilliseconds());
+  this->cm->setTime(this->clock.getElapsedTime().asMilliseconds());
+  this->pm->setTime(this->clock.getElapsedTime().asMilliseconds());
+
   //Clock pour le deplacement de la vue
   this->b.setMovingTime(this->clock.getElapsedTime().asMilliseconds());
 
   //Clock pour les vaisseaux
     // Joueur
-  this->p.setShootTime(this->clock.getElapsedTime().asMilliseconds());
+  this->p->setShootTime(this->clock.getElapsedTime().asMilliseconds());
     // Enemis
   for(int i=0;i<enemisPero.size();i++)
   {
@@ -211,18 +279,15 @@ void Game::setTime()
   }
     // Boss
   this->boss->setTime(this->clock.getElapsedTime().asMilliseconds());
+  this->boss->setShootTime(this->clock.getElapsedTime().asMilliseconds());
 
-  // Clock pour les menus
-  this->cm->setTime(this->clock.getElapsedTime().asMilliseconds());
-  this->pm->setTime(this->clock.getElapsedTime().asMilliseconds());
-  this->mm->setTime(this->clock.getElapsedTime().asMilliseconds());
 
 
   this->clock.restart();
 }
 
 /**
-* Fonctions affichant tout les éléments du jeu
+* \brief Fonctions affichant tout les éléments du jeu
 *
 */
 void Game::draw()
@@ -234,12 +299,13 @@ void Game::draw()
   }
 
   // Affiche les attaques du joueur
-  for(int i=0;i<p.getSizeAtqs();i++)
+  for(int i=0;i<p->getSizeAtqs();i++)
   {
-    p.drawAttaque(window,i);
+    p->drawAttaque(window,i);
   }
 
   // Affiche les attaques du boss
+  //cout<<boss->getSizeAtqs()<<endl;
   for(int i=0;i<boss->getSizeAtqs();i++)
   {
     boss->drawAttaque(window,i);
@@ -256,7 +322,7 @@ void Game::draw()
 
 
   // Affiche le joueur
-  window->draw(p.getSprite());
+  window->draw(p->getSprite());
 
   // Affiche le Boss
   window->draw(boss->getSprite());
@@ -267,9 +333,15 @@ void Game::draw()
     window->draw(enemisPero.get(j)->getSprite());
   }
 
+  // Affiche les bonus
+  for(int j=0;j<bonus.size();j++)
+  {
+    window->draw(bonus.get(j)->getSprite());
+  }
 
   // Affiche les FPS
    ui->drawFPS(window);
+   ui->drawScore(window);
 
   // Affiche le score
   for(int i=0;i<ui->size();i++)
@@ -280,75 +352,163 @@ void Game::draw()
 }
 
 /**
-* Fonctions gerant les déplacement et tirs des différents vaisseau
+* \brief Fonctions gerant les déplacement et tirs des différents vaisseau
 *
 */
 void Game::evenement()
 {
+
   //Deplacement de la caméra
   b.movingView();
 
-  // Deplacement du joueur
-  p.deplacement(b);
-
-  // Attaque du joueur
-  p.attaque(b);
-
-
-  // Deplacement et attaques des enemis
-  for(int i=0;i<enemisPero.size();i++)
+  // Verifie si le boss est vaincu ou non
+  if(!boss->getEtat())
   {
-    if(enemisPero.get(i)->getPosition() < b.getView().getCenter().x+b.getWitdhView()/2)
+    // Deplacement du joueur
+    p->deplacement(b);
+
+    // Attaque du joueur
+    p->attaque(b);
+
+    // ENEMI ---------------------------------------------------------------------------
+    // Deplacement et attaques des enemis
+    for(int i=0;i<enemisPero.size();i++)
     {
-      enemisPero.get(i)->deplacement(b); // Supprimer e quand COLLISION ( sinon baisse constante de fps )
-      enemisPero.get(i)->attaque(b,p);
+      // Condition qui verifie que les enemis sont dans la vue
+      if(enemisPero.get(i)->getPosition() < b.getView().getCenter().x+b.getWitdhView()/2)
+      {
+        enemisPero.get(i)->deplacement(b);
+        enemisPero.get(i)->attaque(b);
+
+        // Quand le joueur se fait toucher
+        if(enemisPero.get(i)->collisionProjectile(p))
+        {
+          // A CHANGER
+          sound.play();
+          while(timer<3000)
+          {
+            timer = this->clock.getElapsedTime().asMilliseconds();
+          }
+          this->refreshVariables();
+          sound.stop();
+          timer = 0;
+        }
+
+        // Collision entre le joueur et un enemi
+        p->collision(enemisPero.get(i));
+
+        // Quand un projectile atteint un vaiseeau Enemi / Boss
+        if(p->collisionProjectile(enemisPero.get(i))==1)
+        {
+          p->setScore(10);
+          enemisPero.supprimer(i);
+        }
+        if(enemisPero.get(i)->getPosition() < b.getView().getCenter().x-(b.getWitdhView()/1.5))
+        {
+          enemisPero.supprimer(i);
+          p->setScore(-5);
+        }
+      }
     }
-    // Peut etre a modifier
-    if(p.collisionProjectile(enemisPero.get(i))==1 || enemisPero.get(i)->getPosition() < b.getView().getCenter().x-(b.getWitdhView()/1.5))
-    {
-      delete enemisPero.get(i);
-      enemisPero.supprimer(i);
-    }
-    p.collision(enemisPero.get(i));
+    // ------------------------------------------------------------------------------------
+
+      // BOSS -------------------------------------------------------------------
+      // Condition qui verifie que le boss est dans la vue
+      if(boss->getPosition() < b.getView().getCenter().x+b.getWitdhView()/2)
+      {
+        // Collision entre le joueur du joueur et le boss
+        p->collision(boss);
+
+        // Deplacement du Boss
+        boss->deplacement(b);
+
+        // Attaque du Boss
+        boss->attaque(b);
+
+        // Collision entre un projectile du boss et le joueur
+        if(boss->collisionProjectile(p))
+        {
+          p->setScore(-5);
+          // A CHANGER
+          sound.play();
+          while(timer<3000)
+          {
+            timer = this->clock.getElapsedTime().asMilliseconds();
+          }
+          this->refreshVariables();
+          sound.stop();
+          timer = 0;
+        }
+      }
+      //-------------------------------------------------------------------------
+
+
+      // BONUS ------------------------------------------------------------------
+      // Condition qui verifie que le bonus est dans la vue
+      for(int j=0;j<bonus.size();j++)
+      {
+        if(bonus.get(j)->getPosition() < b.getView().getCenter().x+b.getWitdhView()/0.5)
+        {
+          bonus.get(j)->deplacement(b);
+          if(p->collisionBonus(bonus.get(j)))
+          {
+            bonus.supprimer(j);
+          }
+          else
+          {
+            // Suppresions des bonus qui sortent de la vue
+            if(bonus.get(j)->getPosition() < b.getView().getCenter().x-(b.getWitdhView()/1.5))
+            {
+              bonus.supprimer(j);
+            }
+          }
+        }
+      }
+      //-------------------------------------------------------------------------
+
+
+      if(p->collisionProjectile(boss))
+      {
+        if(boss->getPv()<=0)
+        {
+          p->setScore(75);
+          boss->setEtat(1);
+          cm->unlockLevel();
+          p->setLevel(1); // Generaliser
+        }
+        else
+        {
+          boss->setPv(-1);
+        }
+      }
+
+
+
+    // Permet de restreinte la zone de deplacement du joueur
+    p->stayInScreen(b);
   }
-
-
-
-  // Permet de restreinte la zone de deplacement du joueur
-  p.stayInScreen(b);
-
-  /*
-  // Gestion des collisions entre le joueur et les enemis
-  for(int i=0;i<enemisPero.size();i++)
+  else
   {
-    p.collision(enemisPero.get(i));
-  }
-  */
-
-  /*
-  // Gestion des projectiles enemis et des enemis
-  for(int i=0;i<enemisPero.size();i++)
-  {
-    if(p.collisionProjectile(enemisPero.get(i))==1 || enemisPero.get(i)->getPosition() < b.getView().getCenter().x-(b.getWitdhView()/1.5))
+    if(boss->dead(b))
     {
-      delete enemisPero.get(i);
-      enemisPero.supprimer(i);
+      cm->setMenuEtat(1);
+      cm->setTime(-1);
+      this->refreshVariables();
     }
+    p->freeAtq(b);
+    this->save();
   }
-  */
-
-  // Attaque du Boss
-  boss->attaque(b);
 
   // Gestion de l'interface et du menu de pause
   pm->setPosition(b.getView().getCenter().x-20,60);
   ui->setPosition(b.getView().getCenter().x+85,0);
   ui->setPositionFPS(b.getView().getCenter().x-162,0);
+  ui->setScore(p->getScore());
 
 }
 
 /**
-* Permet de jouer au jeu
+* \brief Permet de jouer au jeu
 *
 */
 void Game::start()
@@ -373,7 +533,7 @@ void Game::start()
     {
       if (event.type == sf::Event::Closed)
       {
-        this->free();
+        //this->free();
         window->close();
       }
     }
@@ -419,48 +579,75 @@ void Game::start()
         window->setView(b.getView());
       }
 
-
       // Affichage des éléments
       window->display();
     }
   }
-  // Libere la mémoire des attaques de enemis
-  this->free();
 }
 
 /**
-* Permet de sauvegarder le jeu
+* \brief Permet de sauvegarder le jeu
 *
 */
 void Game::save()
 {
   ofstream file;
-  file.open("Character/playerTestSave.txt");
+  file.open("Character/player.txt");
   file << "x = "<< 20 <<";\n";
   file << "y = "<< 30 <<";\n";
-  file << "pv = "<< p.getPv() << ";\n";
-  file << "atqSpeed = "<< p.getAtqSpeed() << ";\n";
-
+  file << "pv = "<< p->getPv() << ";\n";
+  file << "atqSpeed = "<< p->getAtqSpeed() << ";\n";
+  file << "speed = "<< p->getSpeed() << ";\n";
+  file << "score = "<<ui->getScore() << ";\n";
+  file << "level = "<<p->getLevel() << ";\n";
+  file << "bonus = "<<p->getBonus() << ";\n";
+  file << "texture = \""<<p->getFilename()<<"\";\n"<<endl;;
   file.close();
 }
 
-
+/**
+* \brief Permet de liberer la memoire du jeu
+*
+*/
 void Game::free()
 {
 
-  p.free();
+  p->free();
+  p->freeAtq(b);
+  cm->stopSound();
   mm->stopSound();
   pm->stopSound();
-  enemisPero.free();
+
+
+  for(int i=0;i<b.getCouches().size();i++)
+  {
+    b.getCouche(i)->free();
+  }
+  if(bonus.size()>0)
+  {
+    for(int i=0;i<bonus.size();i++)
+    {
+      delete bonus.get(i);
+    }
+  }
+  delete boss;
+  delete mm;
+  delete cm;
+  delete pm;
+  delete ui;
+
 }
 
-
+/**
+* \brief Permet de placer les enemis sur la carte
+*
+*/
 void Game::placementEnemi()
 {
   Enemi* e = new Enemi("Character/enemi.txt",6);
   e->setPosition(628,80);
   e->setTexture();
-  enemisPero.ajouter(e);
+  //enemisPero.ajouter(e);
 
   Enemi* e1 = new Enemi(628,120,e->getTexture(),e->getPv(),e->getAtqSpeed(),e->getSpeed());
   e1->setScale(0.2,0.2);
@@ -493,6 +680,7 @@ void Game::placementEnemi()
 
 
   Enemi* e6 = new Enemi("Character/enemi2.txt",6);
+  e6->setScale(0.2,0.2);
   e6->setPosition(800,30);
   e6->setTexture();
   enemisPero.ajouter(e6);
@@ -516,19 +704,26 @@ void Game::placementEnemi()
   enemisPero.ajouter(e9);
 
 
-  Enemi* e10 = new Enemi(904,60,e6->getTexture(),e6->getPv(),e6->getAtqSpeed(),e6->getSpeed());
-  e10->setScale(0.2,0.2);
-  e10->setTexture();
-  enemisPero.ajouter(e10);
-
-
-  Enemi* e11 = new Enemi(1020,30,e6->getTexture(),e6->getPv(),e6->getAtqSpeed(),e6->getSpeed());
-  e11->setScale(0.2,0.2);
-  e11->setTexture();
-  enemisPero.ajouter(e11);
-
-
 
 }
+
+/**
+* \brief Permet de placer les enemis sur la carte
+*
+*/
+void Game::placementBonus()
+{
+  Bonus* b1 = new Bonus("Projectile/bonus1.txt",5);
+  //b1->setPosition(628,80);
+  b1->setTexture();
+  this->bonus.ajouter(b1);
+
+  Bonus* b2 = new Bonus("Projectile/bonus2.txt",5);
+  //b2->setPosition(1000,80);
+  b2->setTexture();
+  this->bonus.ajouter(b2);
+
+}
+
 
 // ---------------------------------------------------------------------------

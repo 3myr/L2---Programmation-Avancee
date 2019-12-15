@@ -2,6 +2,9 @@
 
 // Methode constructive -----------------------------------------------------
 
+/**
+* \brief Instancie un menu pause
+*/
 PauseMenu::PauseMenu()
 {
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
@@ -10,8 +13,12 @@ PauseMenu::PauseMenu()
   }
 }
 
+/**
+* \brief Instancie un menu pause
+*/
 PauseMenu::PauseMenu(float width, float height)
 {
+  // Charge la police du texte
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
   {
     cout<<"Impossible de charger la police d'écriture"<<endl;
@@ -20,7 +27,9 @@ PauseMenu::PauseMenu(float width, float height)
 
   menuIsOn = 0;
   selectedItemIndex = 0;
+  Time = 0;
 
+  // Implementation du texte ------------------
   sf::Text text;
   text.setFont(font);
   text.setString("Continue");
@@ -30,7 +39,7 @@ PauseMenu::PauseMenu(float width, float height)
   text. setFillColor(sf::Color::Red);
   texts.push_back(sf::Text(text));
 
-  text.setString("Options");
+  text.setString("Save");
   text.setPosition(width, (height));
   //text.setPosition(150, 140);
   text.setScale(0.2,0.2);
@@ -50,6 +59,8 @@ PauseMenu::PauseMenu(float width, float height)
   text.setScale(0.2,0.2);
   text. setFillColor(sf::Color::White);
   texts.push_back(sf::Text(text));
+
+  //------------------------------------------
 }
 
 // ---------------------------------------------------------------------------
@@ -60,6 +71,9 @@ PauseMenu::PauseMenu(float width, float height)
 
 //Fonctions d'observations ---------------------------------------------------
 
+/**
+* \brief
+*/
 int PauseMenu::getEnter()
 {
   //Choisit un onglet
@@ -83,6 +97,9 @@ int PauseMenu::getEnter()
   return -1;
 }
 
+/**
+* \brief
+*/
 sf::Sprite PauseMenu::getSprite()
 {
   return sprite;
@@ -96,10 +113,12 @@ sf::Sprite PauseMenu::getSprite()
 
 //Fonctions de transmorfations -----------------------------------------------
 
-//Return 1 si on affiche le menu, 0 sinon
+/**
+* \brief Fonction qui gere le choix de l'utilisateur dans le menu
+*/
 void PauseMenu::choix()
 {
-  // Gère la gestion d'une manette ou d'un clavier
+  // Si on appuie sur echappe
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && Time >= 240)
   {
     Time = 0;
@@ -146,7 +165,9 @@ void PauseMenu::choix()
     }
   }
 }
-
+/**
+* \brief
+*/
 void PauseMenu::setPosition(float x, float y)
 {
   for(int i=0;i<texts.size();i++)
@@ -154,7 +175,9 @@ void PauseMenu::setPosition(float x, float y)
     texts[i].setPosition(x,y+(i*10)); // A modifier si utiliser
   }
 }
-
+/**
+* \brief
+*/
 void PauseMenu::setTexture()
 {
   texture.loadFromFile("Background/menu.jpg");

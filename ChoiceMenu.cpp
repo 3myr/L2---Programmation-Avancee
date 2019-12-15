@@ -2,6 +2,9 @@
 
 // Methode constructive -----------------------------------------------------
 
+/**
+* \brief Instancie le menu de choix de niveau
+*/
 ChoiceMenu::ChoiceMenu()
 {
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
@@ -23,24 +26,33 @@ ChoiceMenu::ChoiceMenu()
 
 }
 
+/**
+* \brief Instancie le menu de choix de niveau
+*/
 ChoiceMenu::ChoiceMenu(float width, float height)
 {
+  // Charge la texture du texte qui sera affiché
   if(!font.loadFromFile("Font/VCR_OSD_MONO_1.001.ttf"))
   {
     cout<<"Impossible de charger la police d'écriture"<<endl;
   }
-  if (!buffer.loadFromFile("Sounds/rasputin.wav"))
+
+  // Charge la musique qui sera jouer---------------------------
+  if (!buffer.loadFromFile("Sounds/rasputin.ogg")) // A CHANGER
   {
     cout<<"Le sond n'a pas pu être chargé !"<<endl;
     exit(EXIT_FAILURE);
   }
   sound.setBuffer(buffer);
+  // -----------------------------------------------------------
+
   playing = 0;
 
   menuIsOn = 0;
   selectedItemIndex = 0;
   Time = 0;
 
+  // Instancie le text et les texture du menu
   sf::Text text;
   text.setFont(font);
   text.setString("Choissisez Votre Monde");
@@ -57,7 +69,7 @@ ChoiceMenu::ChoiceMenu(float width, float height)
   titreSprite.push_back(sf::Sprite(spriteUI));
 
   // UI pour le premier menu
-  textureUI[1].loadFromFile("Menu/level_2.png");
+  textureUI[1].loadFromFile("Menu/level_2_lock.png");
   spriteUI.setTexture(textureUI[1]);
   spriteUI.setPosition(540,255);
   titreSprite.push_back(sf::Sprite(spriteUI));
@@ -80,7 +92,9 @@ ChoiceMenu::ChoiceMenu(float width, float height)
   spriteUI.setPosition(710,425);
   titreSprite.push_back(sf::Sprite(spriteUI));
 
+  // permet de rendre transparent les images qui sont en cours de selection
   titreSprite[0].setColor(sf::Color(255,255,255,128));
+  // -------------------------------------------------------------
 
 }
 
@@ -91,6 +105,9 @@ ChoiceMenu::ChoiceMenu(float width, float height)
 
 //Fonctions d'observations ---------------------------------------------------
 
+/**
+* \brief Gère l'evenement qui se produit quand l'utilisateur appuie sur entrer
+*/
 int ChoiceMenu::getEnter()
 {
   //Choisit un onglet
@@ -102,9 +119,20 @@ int ChoiceMenu::getEnter()
   return -1;
 }
 
+/**
+* \brief
+*/
 sf::Sprite ChoiceMenu::getSprite()
 {
   return sprite;
+}
+
+/**
+* \brief
+*/
+int ChoiceMenu::getLevel()
+{
+  return level;
 }
 
 // ---------------------------------------------------------------------------
@@ -115,7 +143,9 @@ sf::Sprite ChoiceMenu::getSprite()
 
 //Fonctions de transmorfations -----------------------------------------------
 
-//Return 1 si on affiche le menu, 0 sinon
+/**
+* \brief Fonction qui gere le choix de l'utilisateur dans le menu
+*/
 void ChoiceMenu::choix()
 {
   if(menuIsOn == 1)
@@ -124,7 +154,7 @@ void ChoiceMenu::choix()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && Time >= 240)
     {
       Time = 0;
-      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,255));
+      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,255)); // remet la texture sans transparence
       if(selectedItemIndex == 4)
       {
         selectedItemIndex = 0;
@@ -133,14 +163,14 @@ void ChoiceMenu::choix()
       {
         selectedItemIndex = selectedItemIndex + 1;
       }
-      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,128));
+      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,128)); // met la texture avec un niveau de transparance pour montrer qu'on le survole
 
     }
     //Deplacement en Haut
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && Time >= 240)
     {
       Time = 0;
-      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,255));
+      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,255)); // remet la texture sans transparence
       if(selectedItemIndex == 0)
       {
         selectedItemIndex = 4;
@@ -149,12 +179,14 @@ void ChoiceMenu::choix()
       {
         selectedItemIndex = selectedItemIndex - 1;
       }
-      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,128));
+      titreSprite[selectedItemIndex].setColor(sf::Color(255,255,255,128)); // met la texture avec un niveau de transparance pour montrer qu'on le survole
     }
   }
 }
 
-
+/**
+* \brief
+*/
 void ChoiceMenu::setTexture()
 {
   texture.loadFromFile("Background/menu.jpg");
@@ -162,4 +194,19 @@ void ChoiceMenu::setTexture()
   sprite.scale(0.7,0.7);
 }
 
+/**
+* \brief Permet de changer la texture d'une icone quand le niveau est débloqué
+*/
+void ChoiceMenu::unlockLevel()
+{
+  textureUI[1].loadFromFile("Menu/level_2.png");
+}
+
+/**
+* \brief Permet de verrouiller tout les niveaux
+*/
+void ChoiceMenu::lockedAllLevel()
+{
+  textureUI[1].loadFromFile("Menu/level_2_lock.png");
+}
 // ---------------------------------------------------------------------------

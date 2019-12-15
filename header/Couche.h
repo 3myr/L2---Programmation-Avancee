@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <exception>
 
 using namespace std;
 
@@ -53,7 +54,7 @@ class Couche
   void setTexture();
   void drawMap(sf::RenderWindow* WINDOW);
   void setTextureTileSet();
-
+  void free();
 
 }
 ;

@@ -30,7 +30,6 @@ class Projectile
   Projectile(const std::string FILENAME, int NBDEGATS);
 
   // Fonctions d'observations
-  void affiche();
   float getPosition();
   sf::Sprite getSprite();
   sf::Texture getTexture();

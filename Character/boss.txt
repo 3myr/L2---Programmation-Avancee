@@ -1,6 +1,6 @@
-x = 280;
+x = 1840;
 y = 80;
-pv = 10;
+pv = 1;
 atqSpeed = 400;
 speed = 1;
 texture = "Character/Boss1.png";

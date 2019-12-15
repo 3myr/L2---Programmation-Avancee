@@ -20,6 +20,9 @@ class ChoiceMenu : public Menu
     sf::Texture textureUI[5];
     sf::Sprite spriteUI;
 
+    int level;
+
+
   public:
 
   // Constructeurs
@@ -29,10 +32,13 @@ class ChoiceMenu : public Menu
   // Fonctions d'observations
   int getEnter();
   sf::Sprite getSprite();
+  int getLevel();
 
   // Fonctions de transformations
   void setTexture();
   void choix();
+  void unlockLevel();
+  void lockedAllLevel();
 
 
 };

@@ -22,12 +22,14 @@ class Enemi : public Vaisseau
   Enemi(const std::string FILENAME,int NbLigneInTxt);
 
   // Fonctions d'observations
-  void affiche();
+  void loadVar(const std::string FILENAME,int NbLigneInTxt);
+
 
   // Fonctions de transformations
   void deplacement(Background b);
-  void attaque(Background b, Vaisseau v);
+  void attaque(Background b);
   void setPosition(float x, float y);
+  void freeAtq(Background b);
 
 };
 #endif

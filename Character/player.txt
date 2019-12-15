@@ -1,6 +1,10 @@
 x = 20;
 y = 30;
 pv = 50;
-atqSpeed = 300; //Attention, une attque speed moins élevé entrainera des baisses de fps
+atqSpeed = 300;
 speed = 1;
+score = 6;
+level = 1;
+bonus = bonus1;
 texture = "Character/player.png";
+
